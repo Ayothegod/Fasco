@@ -1,50 +1,45 @@
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
 import {
-  ActionFunctionArgs,
   Form,
   Link,
-  LoaderFunctionArgs,
-  json,
-  useActionData,
+  useActionData
 } from "react-router-dom";
-import bannerImage from "../fascoAsset/Rectangle 19280 (1).png";
-import { getUserDetails, logout, register } from "../services/authAction";
-import { registerSchema } from "../lib/schema";
-import { parseWithZod } from "@conform-to/zod";
-import { useForm } from "@conform-to/react";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
 import LogOut from "../components/utils/LogOut";
+import bannerImage from "../fascoAsset/Rectangle 19280 (1).png";
+import { registerSchema } from "../lib/schema";
 
-export async function Loader({ request }: LoaderFunctionArgs) {
-  const result = await getUserDetails();
-  // console.log(result);
-  return json({ msg: "hello" });
-}
+// export async function Loader({) {
 
-export async function Action({ request }: ActionFunctionArgs) {
-  const formData = await request.formData();
-  const intent = await formData.get("intent");
+//   return json({ msg: "hello" });
+// }
 
-  if (intent === "signInWithPassword") {
-    const submission = parseWithZod(formData, {
-      schema: registerSchema,
-    });
-    if (submission.status !== "success") {
-      return submission.reply();
-    }
+// export async function Action({ request }: ActionFunctionArgs) {
+//   const formData = await request.formData();
+//   const intent = await formData.get("intent");
 
-    const result = await register(submission.payload);
-    return json({ msg: "User logged in" });
-  }
+//   if (intent === "signInWithPassword") {
+//     const submission = parseWithZod(formData, {
+//       schema: registerSchema,
+//     });
+//     if (submission.status !== "success") {
+//       return submission.reply();
+//     }
 
-  if (intent === "logout") {
-    const deleteSession = await logout();
-    return json(null);
-  }
+//     const result = await register(submission.payload);
+//     return json({ msg: "User logged in" });
+//   }
 
-  console.log("no intent found");
-  return json({ msg: "hello" });
-}
+//   if (intent === "logout") {
+//     const deleteSession = await logout();
+//     return json(null);
+//   }
+
+//   console.log("no intent found");
+//   return json({ msg: "hello" });
+// }
 
 export default function RegisterRoute() {
   const lastResult: any = useActionData();

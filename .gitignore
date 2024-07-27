@@ -23,6 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations
+
 /.cache
 /build
 .env
+prisma/migrations prisma/dev.db prisma/dev.db-journal

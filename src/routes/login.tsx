@@ -2,48 +2,45 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import bannerImage from "../fascoAsset/Rectangle 19280.png";
 import {
-  ActionFunctionArgs,
   Form,
   Link,
-  LoaderFunctionArgs,
-  json,
   useActionData,
 } from "react-router-dom";
-import { getUserDetails, login, logout } from "../services/authAction";
 import { parseWithZod } from "@conform-to/zod";
 import { loginSchema } from "../lib/schema";
 import { useForm } from "@conform-to/react";
 import LogOut from "../components/utils/LogOut";
+// { request }: LoaderFunctionArgs
 
-export async function Loader({ request }: LoaderFunctionArgs) {
-  const result = await getUserDetails();
-  console.log(result);
-  return json({ msg: "hello" });
-}
+// export async function Loader() {
+//   const result = await getUserDetails();
+//   console.log(result);
+//   return json({ msg: "hello" });
+// }
 
-export async function Action({ request }: ActionFunctionArgs) {
-  const formData = await request.formData();
-  const intent = await formData.get("intent");
+// export async function Action() {
+//   const formData = await request.formData();
+//   const intent = await formData.get("intent");
 
-  if (intent === "login") {
-    const submission = parseWithZod(formData, {
-      schema: loginSchema,
-    });
-    if (submission.status !== "success") {
-      return submission.reply();
-    }
-    const result = await login(submission.payload.email as string, submission.payload.password as string);
-    return json({ msg: "User logged in" });
-  }
+//   if (intent === "login") {
+//     const submission = parseWithZod(formData, {
+//       schema: loginSchema,
+//     });
+//     if (submission.status !== "success") {
+//       return submission.reply();
+//     }
+//     const result = await login(submission.payload.email as string, submission.payload.password as string);
+//     return json({ msg: "User logged in" });
+//   }
 
-  if (intent === "logout") {
-    const deleteSession = await logout();
-    return json(null);
-  }
+//   if (intent === "logout") {
+//     const deleteSession = await logout();
+//     return json(null);
+//   }
 
-  console.log("no intent found");
-  return json({ msg: "hello" });
-}
+//   console.log("no intent found");
+//   return json({ msg: "hello" });
+// }
 
 export default function LoginRoute() {
   const lastResult: any = useActionData();
@@ -55,6 +52,7 @@ export default function LoginRoute() {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+
   return (
     <main className="pageStyle flex items-center justify-center">
       <div className="flex w-full sm:max-w-sm md:max-w-3xl border rounded-md overflow-hidden">

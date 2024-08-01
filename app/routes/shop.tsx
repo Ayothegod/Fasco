@@ -5,8 +5,7 @@
 
 import Filters from "../components/build/Filters";
 import Crucible from "../components/utils/Crucible";
-//   import { getAllCloths } from "../services/sanityActions";
-import { Menu } from "lucide-react";
+import { Menu, LayoutDashboard, LayoutGrid } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -22,7 +21,13 @@ import {
 import { Button } from "../components/ui/button";
 import { useEffect, useState } from "react";
 import { Input } from "../components/ui/input";
-import { Form, json, redirect, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  json,
+  redirect,
+  useLoaderData,
+  useSearchParams,
+} from "@remix-run/react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -33,6 +38,7 @@ import {
 } from "~/components/ui/breadcrumb";
 import Newsletter from "~/components/build/Newsletter";
 import FollowUs from "~/components/build/FollowUs";
+import clsx from "clsx";
 
 // export async function Loader({ request }: LoaderFunctionArgs) {
 //   try {
@@ -152,16 +158,32 @@ import FollowUs from "~/components/build/FollowUs";
 
 export default function Shop() {
   // const loaderData: any = useLoaderData();
-  // console.log(loaderData);
-  // const fetcher = useFetcher();
-  // const submit = useSubmit();
+  const [defaultLayout, setDefaultLayout] = useState("grid");
 
-  // const [selectedValue, setSelectedValue] = useState("");
-  // const [shouldSubmit, setShouldSubmit] = useState(false);
-  // const handleSelectChange = (value: any) => {
-  //   setSelectedValue(value);
-  //   setShouldSubmit(!shouldSubmit);
-  // };
+  const updateDefaultLayout = () => {
+    if (defaultLayout === "grid") {
+      setDefaultLayout("flat");
+    } else {
+      setDefaultLayout("grid");
+    }
+  };
+
+  //   const [searchParams, setSearchParams] = useSearchParams();
+
+  //   const handleSearch = (e: any) => {
+  //     //   const currentSearchParams = new URLSearchParams(searchParams);
+  //     //   currentSearchParams.set("search", "e.target.value");
+  //     //   setSearchParams(currentSearchParams);
+  //       const newsearch = searchParams.set("search", "e.target.value")
+  //     };
+  //   const handleChange = (event: any) => {
+  //     const search = event.target.value;
+  //     setSearchParams((prevParams) => {
+  //       const newParams = new URLSearchParams(prevParams);
+  //       newParams.set("search", search);
+  //       return newParams;
+  //     });
+  //   };
 
   return (
     <main className="min-h-[60vh]">
@@ -180,10 +202,12 @@ export default function Shop() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+        {/* <Button onClick={handleSearch}>Add search</Button> */}
       </section>
 
-      <section className="pageStyle mt-8 flex gap-x-4 divide-x-2">
-        <aside className="hidden md:block w-[30%] lg:w-[25%] px-2">
+      <section className="pageStyle mt-8 flex gap-x-4">
+        <aside className="hidden md:block w-[30%] lg:w-[25%]">
           <h3 className="text-xl font-serif font-bold tracking-wide">
             Filters
           </h3>
@@ -253,7 +277,7 @@ export default function Shop() {
         <main className="px-2 w-full">
           <div className="flex items-center justify-between">
             <Form method="post">
-              <input type="hidden" name="selectedValue"/>
+              <input type="hidden" name="selectedValue" />
               <Select>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Collections" />
@@ -270,19 +294,33 @@ export default function Shop() {
               </Select>
             </Form>
 
-            <div>
-              <Menu className="border h-8 w-8 p-1 rounded-md" />
+            <div className="flex items-center gap-2">
+              {/* <LayoutGrid className={clsx("border h-8 w-8 p-1 rounded-md", {})} /> */}
+              <LayoutGrid
+                onClick={() => setDefaultLayout("grid")}
+                className={`border h-8 w-8 p-1 rounded-md cursor-pointer ${
+                  defaultLayout == "grid" &&
+                  " cursor-not-allowed text-neutral-300"
+                }`}
+              />
+              <Menu
+                onClick={updateDefaultLayout}
+                className={`border h-8 w-8 p-1 rounded-md cursor-pointer ${
+                  defaultLayout == "flat" &&
+                  " cursor-not-allowed text-neutral-300"
+                }`}
+              />
             </div>
           </div>
         </main>
       </section>
 
-      <section className="hidden md:block mt-16 mb-16">
-        {/* <img src={slider} alt="top-banner-image" className="" /> */}
-      </section>
+      {/* <section className="hidden md:block mt-16 mb-16"> */}
+      {/* <img src={slider} alt="top-banner-image" className="" /> */}
+      {/* </section> */}
 
-      <FollowUs />
-      <Newsletter />
+      {/* <FollowUs /> */}
+      {/* <Newsletter /> */}
     </main>
   );
 }

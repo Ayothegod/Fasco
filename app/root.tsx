@@ -13,7 +13,7 @@ import { Lucia } from "lucia";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const isUser = stateStore((state: any) => state.isUser);
-  
+
   return (
     <html lang="en">
       <head>
@@ -23,9 +23,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="font-inter">
-        <Header user={isUser}/>
-        {children}
-        <Footer/>
+        <Header user={isUser} />
+        <div className="mb-20">{children}</div>
+        <Footer />
         <ScrollRestoration />
         <Scripts />
       </body>

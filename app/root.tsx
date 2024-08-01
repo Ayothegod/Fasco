@@ -9,6 +9,7 @@ import "./tailwind.css";
 import Header from "./components/build/Header";
 import Footer from "./components/build/Footer";
 import { stateStore } from "~/lib/store";
+import { Lucia } from "lucia";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const isUser = stateStore((state: any) => state.isUser);

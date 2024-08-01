@@ -14,7 +14,6 @@ export default function Header({ user }: any) {
             FASCO
           </h1>
         </IsLoggedIn>
-        {user ? <p>There User</p> : <p>Null</p>}
 
         <IsAuthPage>
           <nav className=" contents">

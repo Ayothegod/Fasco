@@ -13,7 +13,7 @@ export default function Newsletter() {
           className="hidden lg:block max-h-[400px]"
         />
         <div className="flex flex-col items-center justify-center">
-          <div className="flex flex-col items-center justify-center max-w-[600px] shadow p-2 text-center space-y-4">
+          <div className="flex flex-col items-center justify-center max-w-[600px] p-2 text-center space-y-4">
             <h2 className="text-2xl sm:text-3xl font-serif font-bold tracking-wide">
               Subscribe To Our Newsletter
             </h2>

@@ -1,5 +1,5 @@
-import type { MetaFunction } from "@remix-run/node";
-import { json, useRouteError } from "@remix-run/react";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { json, redirect, useLoaderData, useRouteError } from "@remix-run/react";
 import DealsOfTheMonth from "~/components/build/DealsOfTheMonth";
 import FollowUs from "~/components/build/FollowUs";
 import NewArrivals from "~/components/build/NewArrivals";
@@ -17,6 +17,9 @@ import louisVuittonLogo from "~/assets/fascoAsset/logo (2).png";
 import chanelLogo from "~/assets/fascoAsset/logo (3).png";
 import calvinKleinLogo from "~/assets/fascoAsset/logo.png";
 import slider from "~/assets/fascoAsset/slider.png";
+import { requireUser } from "~/lib/actions/authActions";
+import LogOut from "~/components/utils/LogOut";
+import { commitSession } from "~/services/session.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -25,18 +28,36 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
   try {
-    // const data = await client.fetch(`*[_type == "event"]`);
-    return json({ data: "data" });
+    // const user = await requireUser(request);
+
+    // if (!user) {
+    //   return redirect("/login");
+    // }
+
+    const user = "";
+    // return json(
+    //   { user },
+    //   {
+    //     headers: {
+    //       "Set-Cookie": await commitSession(user.session),
+    //     },
+    //   }
+    // );
+    return json({ user });
   } catch (error) {
     return json({ error: "An error occured!" });
   }
 }
 
 export default function Index() {
+  // const data = useLoaderData();
+
   return (
     <main className="min-h-[50vh]">
+      <LogOut />
+
       <section className="pageStyle grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="hidden md:block w-full h-[400px] md:h-[500px] bg-gray-300 rounded-md">
           <img

@@ -1,54 +1,75 @@
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import bannerImage from "~/assets/fascoAsset/Rectangle 19280.png";
-// import { parseWithZod } from "@conform-to/zod";
-// import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
+import { useForm } from "@conform-to/react";
 import { loginSchema } from "../lib/schema";
 import LogOut from "../components/utils/LogOut";
-import { Form, Link, useActionData } from "@remix-run/react"
-import { useForm } from "react-hook-form";
-// { request }: LoaderFunctionArgs
+import { Form, json, Link, redirect, useActionData } from "@remix-run/react";
+import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  getSession,
+  commitSession,
+  destroySession,
+} from "~/services/session.server";
+import { requireUser } from "~/lib/actions/authActions";
 
-// export async function Loader() {
-//   const result = await getUserDetails();
-//   console.log(result);
-//   return json({ msg: "hello" });
-// }
+export async function loader({ request }: LoaderFunctionArgs) {
+  const user = await requireUser(request);
+  console.log(user);
 
-// export async function Action() {
-//   const formData = await request.formData();
-//   const intent = await formData.get("intent");
+  if (user) {
+    return redirect("/");
+  }
 
-//   if (intent === "login") {
-//     const submission = parseWithZod(formData, {
-//       schema: loginSchema,
-//     });
-//     if (submission.status !== "success") {
-//       return submission.reply();
-//     }
-//     const result = await login(submission.payload.email as string, submission.payload.password as string);
-//     return json({ msg: "User logged in" });
-//   }
+  return json({ msg: "hello" });
+}
 
-//   if (intent === "logout") {
-//     const deleteSession = await logout();
-//     return json(null);
-//   }
+export async function action({ request }: ActionFunctionArgs) {
+  const formData = await request.formData();
+  const intent = await formData.get("intent");
+  const session = await getSession(request);
 
-//   console.log("no intent found");
-//   return json({ msg: "hello" });
-// }
+  if (intent === "login") {
+    const submission = parseWithZod(formData, {
+      schema: loginSchema,
+    });
+    if (submission.status !== "success") {
+      return submission.reply();
+    }
+
+    session.set("user", submission.value.email);
+    // session.flash("data", { user: true, email: submission.value.email });
+
+    return redirect("/", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  }
+
+  if (intent === "logout") {
+    return redirect("/login", {
+      headers: {
+        "Set-Cookie": await destroySession(session),
+      },
+    });
+  }
+
+  console.log("no intent found");
+  return json({ msg: "hello" });
+}
 
 export default function LoginRoute() {
-  const lastResult: any = useActionData();
-  // const [form, fields] = useForm({
-  //   lastResult,
-  //   onValidate({ formData }) {
-  //     return parseWithZod(formData, { schema: loginSchema });
-  //   },
-  //   shouldValidate: "onBlur",
-  //   shouldRevalidate: "onInput",
-  // });
+  const lastResult: any = useActionData<typeof action>();
+  const [form, fields] = useForm({
+    lastResult,
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: loginSchema });
+    },
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
+  });
 
   return (
     <main className="pageStyle flex items-center justify-center">
@@ -95,29 +116,42 @@ export default function LoginRoute() {
           <span className="text-center text-lg font-bold text-neutral-600">
             OR
           </span>
-          {fields.email.errors ? <div>{fields.email.errors}</div> : null}
-          <div>{fields.password.errors}</div>
 
           <Form method="post" className="space-y-4">
-            <Input placeholder="Email Address" name="email" />
-            <Input placeholder="Password" name="password" />
+            <div>
+              <Input placeholder="Email Address" name="email" />
+              {fields.email.errors ? (
+                <p className="text-xs text-red-500">{fields.email.errors}</p>
+              ) : null}
+            </div>
 
-            <Button
-              name="intent"
-              value="login"
-              className="w-full"
-              size="sm"
-            >
+            <div>
+              <Input placeholder="Password" name="password" />
+              {fields.password.errors ? (
+                <p className="text-xs text-red-500">{fields.password.errors}</p>
+              ) : null}
+            </div>
+
+            <Button name="intent" value="login" className="w-full" size="sm">
               Log in
             </Button>
           </Form>
 
           <Link
-            to="/"
+            to="/terms"
             className="mt-10 md:mt-auto text-xs text-blue-500 hover:text-blue-600 font-light text-right"
           >
             Fasco Terms and Conditions
           </Link>
+
+          <div>
+            <span className="text-xs">
+              Already have an account?{" "}
+              <Link to="/register" className="underline">
+                register
+              </Link>
+            </span>
+          </div>
         </div>
       </div>
     </main>

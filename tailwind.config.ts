@@ -18,6 +18,13 @@ const config = {
       },
     },
     extend: {
+      width: {
+        '1/7': '14.2857%', // Custom width for 1/7th
+      },
+      transform: {
+        'skewed': 'skewX(-10deg)', // Custom skew transformation
+        'normal': 'skewX(0)', // Reset skew transformation
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

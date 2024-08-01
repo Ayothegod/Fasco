@@ -1,10 +1,8 @@
-import { imageNumbers } from "../../lib/database";
-
-imageNumbers
+import { followUsImages, imageNumbers } from "../../lib/database";
 
 export default function FollowUs() {
   return (
-    <section className="mt-8 mb-16 px-4">
+    <section className="mt-8 mb-16">
       <div className="text-center">
         <h2 className="text-2xl sm:text-3xl md:text-2xl font-serif font-bold tracking-wide">
           Follow Us On Instagram
@@ -15,14 +13,22 @@ export default function FollowUs() {
         </p>
       </div>
 
-      <div className="flex overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 rounded-md py-4">
-        {imageNumbers.map((image, index) => (
-          <img
+      <div className="flex overflow-x-hidden items-center mt-10">
+        {followUsImages.map((image, index) => (
+          <div
             key={index}
-            src={`https://picsum.photos/200/${index % 2 === 0 ? '200' : '300'}?random&format=png`}
-            alt="image alts"
-            className="object-contain"
-          />
+            className={`shrink-0 w-full lg:w-1/7 md:w-1/5 sm:w-1/2 ${
+              index % 2 === 0 ? "normal" : ""
+            }`}
+          >
+            <img
+              src={image.src}
+              alt={`img-${index}`}
+              className={`w-full transition-transform duration-300 object-cover object-top ${
+                index % 2 === 1 ? "h-60" : "h-48"
+              }`}
+            />
+          </div>
         ))}
       </div>
     </section>

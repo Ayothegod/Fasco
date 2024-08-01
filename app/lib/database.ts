@@ -38,6 +38,16 @@ export const imageCarouselArray = [
   { src: image7, alt: "seventh-image" },
 ];
 
+export const followUsImages = [
+  { src: image1, alt: "first-image" },
+  { src: image2, alt: "second-image" },
+  { src: image3, alt: "third-image" },
+  { src: image4, alt: "fourth-image" },
+  { src: image5, alt: "fifth-image" },
+  { src: image6, alt: "sixth-image" },
+  { src: image7, alt: "seventh-image" },
+];
+
 export const tabsTrigger = [
   { value: "men-fashion", text: "Men's Fashion" },
   { value: "women-fashion", text: "Women's Fashion" },

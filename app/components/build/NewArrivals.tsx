@@ -9,15 +9,7 @@ import femaleSvg from "~/assets/fascoAsset/image 3.svg";
 import { Button } from "../ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
-export default function NewArrivals({ male, female }: any) {
-  // console.log(male, female);
-
-  const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
-
-  const handleButtonClick = (index: any) => {
-    setSelectedButtonIndex(index);
-  };
-
+export default function NewArrivals() {
   return (
     <main className="pageStyle mt-8 mb-16 overflow-x-hidden">
       <div className="text-center">
@@ -30,16 +22,13 @@ export default function NewArrivals({ male, female }: any) {
         </p>
       </div>
 
-      <Tabs defaultValue="men-fashion" className="mt-4">
-        <TabsList className="flex items-center justify-between overflow-x-scroll sm:overflow-x-hidden bg-neutral-800">
+      <Tabs defaultValue="men-fashion" className="mt-8">
+        <TabsList className="flex items-center justify-between overflow-x-scroll sm:overflow-x-hidden bg-white">
           {tabsTrigger.map((tab, index) => (
             <TabsTrigger
               value={tab.value}
-              className={`w-full relative ${
-                selectedButtonIndex == index && "bg-black"
-              }`}
+              className={`w-full relative data-[state=active]:bg-black data-[state=active]:text-white`}
               key={index}
-              onClick={() => handleButtonClick(index)}
             >
               {tab.text}
             </TabsTrigger>
@@ -48,62 +37,25 @@ export default function NewArrivals({ male, female }: any) {
 
         <div className="mt-4">
           <TabsContent value="men-fashion">
-            <div className="p-10 border">
-              {male &&
-                male.documents.map((data: any) => (
-                  <div key={data.id}>
-                    <p>{data.title}</p>
-                  </div>
-                ))}
-            </div>
+            <p>Hello men-fashion</p>
           </TabsContent>
           <TabsContent value="women-fashion">
-            <div className="p-1 border">
-              {female &&
-                female.documents.map((data: any) => (
-                  <div key={data.id}>
-                    <p>{data.title}</p>
-                  </div>
-                ))}
-            </div>
+            <p>Hello women-fashion</p>
           </TabsContent>
           <TabsContent value="women-accessories">
-            <img
-              src={female2Png}
-              alt="image@svg"
-              className="h-48 w-48 object-cover"
-            />
+            <p>Hello women-accessories</p>
           </TabsContent>
           <TabsContent value="men-accessories">
-            <img
-              src={maleSvg}
-              alt="image@svg"
-              className="h-48 w-48 object-cover object-top"
-            />
+            <p>Hello men-accessories</p>
           </TabsContent>
           <TabsContent value="discount">
-            {" "}
-            <img
-              src={female1Png}
-              alt="image@svg"
-              className="h-48 w-48 object-cover"
-            />
+            <p>Hello discount</p>
           </TabsContent>
         </div>
       </Tabs>
       <div className="mt-8 flex items-center justify-center ">
         <Button className="w-full sm:w-fit sm:px-8">View More</Button>
       </div>
-
-      {/* <div>
-        {imageNumbers.map((image, index) => (
-          <img
-            key={index}
-            src={`https://picsum.photos/200/200?id=1&format=png`}
-            alt="image alts"
-          />
-        ))}
-      </div> */}
     </main>
   );
 }

@@ -51,7 +51,6 @@ export const Query = () => {
   console.log(data);
 
   // const [searchParams, setSearchParams] = useSearchParams();
-  // // console.log(searchParams);
 
   // const handleClick = () => {
   //   const currentSearchParams = new URLSearchParams(searchParams);

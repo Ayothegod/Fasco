@@ -1,4 +1,4 @@
-import { json, useLoaderData } from "react-router-dom";
+import { json } from "react-router-dom";
 import DealsOfTheMonth from "../components/build/DealsOfTheMonth";
 import FollowUs from "../components/build/FollowUs";
 import NewArrivals from "../components/build/NewArrivals";
@@ -16,8 +16,6 @@ import louisVuittonLogo from "../fascoAsset/logo (2).png";
 import chanelLogo from "../fascoAsset/logo (3).png";
 import calvinKleinLogo from "../fascoAsset/logo.png";
 import slider from "../fascoAsset/slider.png";
-import { getUserDetails } from "../services/authAction";
-import client from "../sanity/client";
 
 export async function Loader() {
   try {
@@ -30,7 +28,7 @@ export async function Loader() {
 }
 
 export default function Root() {
-  const loaderData: any = useLoaderData();
+  // const loaderData: any = useLoaderData();
   // console.log(loaderData);
 
   return (

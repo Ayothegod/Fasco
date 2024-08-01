@@ -33,121 +33,121 @@ import { Button } from "../components/ui/button";
 import { useEffect, useState } from "react";
 import { Input } from "../components/ui/input";
 
-export async function Loader({ request }: LoaderFunctionArgs) {
-  try {
-    const url = new URL(request.url);
-    const searchParams = new URLSearchParams(url.search);
-    const searchData = searchParams.get("tab")
-    // console.log(searchData);
+// export async function Loader({ request }: LoaderFunctionArgs) {
+//   try {
+//     const url = new URL(request.url);
+//     const searchParams = new URLSearchParams(url.search);
+//     const searchData = searchParams.get("tab")
+//     // console.log(searchData);
 
-    let query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//     let query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
 
-    if (searchData) {
-      if (searchData === "allClothing") {
-        query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
-      }
-      else if (searchData === "bestSelling") {
-        query = `*[_type == "cloth" && "best-selling" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
-      }
-      else if (searchData === "newArrivals") {
-        query = `*[_type == "cloth" && "new-arrivals" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
-      }
-      else if (searchData === "accessories") {
-        query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
-      }
+//     if (searchData) {
+//       if (searchData === "allClothing") {
+//         query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//       }
+//       else if (searchData === "bestSelling") {
+//         query = `*[_type == "cloth" && "best-selling" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//       }
+//       else if (searchData === "newArrivals") {
+//         query = `*[_type == "cloth" && "new-arrivals" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//       }
+//       else if (searchData === "accessories") {
+//         query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//       }
 
-      const result = await getAllCloths(query)
-      console.log({ result });
-      return json({ result })
-    }
+//       const result = await getAllCloths(query)
+//       console.log({ result });
+//       return json({ result })
+//     }
 
-    const result = await getAllCloths(query)
-    return json({ result });
-  } catch (error) {
-    return json({ error: "An error occured!" });
-  }
-}
+//     const result = await getAllCloths(query)
+//     return json({ result });
+//   } catch (error) {
+//     return json({ error: "An error occured!" });
+//   }
+// }
 
-export async function Action({ request }: ActionFunctionArgs) {
-  const formData = await request.formData();
-  const url = new URL(request.url);
-  const searchParams = new URLSearchParams(url.search);
-  // const intent = await formData.get("intent");
+// export async function Action({ request }: ActionFunctionArgs) {
+//   const formData = await request.formData();
+//   const url = new URL(request.url);
+//   const searchParams = new URLSearchParams(url.search);
+//   // const intent = await formData.get("intent");
 
-  const selectedValue = formData.get("selectedValue");
-  // let query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//   const selectedValue = formData.get("selectedValue");
+//   // let query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
 
-  if (selectedValue) {
-    if (selectedValue === "allClothing") {
-      // query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
-      searchParams.set("tab", "allClothing");
-      url.search = searchParams.toString();
-    }
-    else if (selectedValue === "bestSelling") {
-      // query = `*[_type == "cloth" && "best-selling" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
-      searchParams.set("tab", "bestSelling");
-      url.search = searchParams.toString();
-    }
-    else if (selectedValue === "newArrivals") {
-      // query = `*[_type == "cloth" && "new-arrivals" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
-      searchParams.set("tab", "newArrivals");
-      url.search = searchParams.toString();
-    }
-    else if (selectedValue === "accessories") {
-      // query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
-      searchParams.set("tab", "accessories");
-      url.search = searchParams.toString();
-    }
+//   if (selectedValue) {
+//     if (selectedValue === "allClothing") {
+//       // query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//       searchParams.set("tab", "allClothing");
+//       url.search = searchParams.toString();
+//     }
+//     else if (selectedValue === "bestSelling") {
+//       // query = `*[_type == "cloth" && "best-selling" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//       searchParams.set("tab", "bestSelling");
+//       url.search = searchParams.toString();
+//     }
+//     else if (selectedValue === "newArrivals") {
+//       // query = `*[_type == "cloth" && "new-arrivals" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//       searchParams.set("tab", "newArrivals");
+//       url.search = searchParams.toString();
+//     }
+//     else if (selectedValue === "accessories") {
+//       // query = `*[_type == "cloth" && "all-products" in tags]{name, _id, slug, price, image,tags, colors, sizes}`
+//       searchParams.set("tab", "accessories");
+//       url.search = searchParams.toString();
+//     }
 
-    // const result = await getAllCloths(query)
-    // console.log(result);
-    return redirect(url.toString());
-  }
+//     // const result = await getAllCloths(query)
+//     // console.log(result);
+//     return redirect(url.toString());
+//   }
 
-  // if (selectedValue === "allClothing") {
-  //   searchParams.set("tab", "allClothing");
-  //   url.search = searchParams.toString();
-  //   return redirect(url.toString());
-  // }
+//   // if (selectedValue === "allClothing") {
+//   //   searchParams.set("tab", "allClothing");
+//   //   url.search = searchParams.toString();
+//   //   return redirect(url.toString());
+//   // }
 
-  // if (selectedValue === "bestSelling") {
-  //   searchParams.set("tab", "bestSelling");
-  //   url.search = searchParams.toString();
-  //   return redirect(url.toString());
-  // }
+//   // if (selectedValue === "bestSelling") {
+//   //   searchParams.set("tab", "bestSelling");
+//   //   url.search = searchParams.toString();
+//   //   return redirect(url.toString());
+//   // }
 
-  // if (selectedValue === "newArrivals") {
-  //   searchParams.set("tab", "newArrivals");
-  //   url.search = searchParams.toString();
-  //   return redirect(url.toString());
-  // }
+//   // if (selectedValue === "newArrivals") {
+//   //   searchParams.set("tab", "newArrivals");
+//   //   url.search = searchParams.toString();
+//   //   return redirect(url.toString());
+//   // }
 
-  // if (selectedValue === "accessories") {
-  //   searchParams.set("tab", "accessories");
-  //   url.search = searchParams.toString();
-  //   return redirect(url.toString());
-  // }
+//   // if (selectedValue === "accessories") {
+//   //   searchParams.set("tab", "accessories");
+//   //   url.search = searchParams.toString();
+//   //   return redirect(url.toString());
+//   // }
 
-  // const search = await formData.get("search");
-  // const age = await formData.get("age");
+//   // const search = await formData.get("search");
+//   // const age = await formData.get("age");
 
-  // const url = new URL(request.url);
-  // const searchParams = new URLSearchParams(url.search);
+//   // const url = new URL(request.url);
+//   // const searchParams = new URLSearchParams(url.search);
 
-  // if (search) {
-  //   searchParams.set("search", search.toString());
-  // }
-  // if (age) {
-  //   searchParams.set("age", age.toString());
-  // }
+//   // if (search) {
+//   //   searchParams.set("search", search.toString());
+//   // }
+//   // if (age) {
+//   //   searchParams.set("age", age.toString());
+//   // }
 
-  // url.search = searchParams.toString();
+//   // url.search = searchParams.toString();
 
-  // return redirect(url.toString());
+//   // return redirect(url.toString());
 
-  console.log("NOTAVALUE");
-  return null;
-}
+//   console.log("NOTAVALUE");
+//   return null;
+// }
 
 export default function Shop() {
   const loaderData: any = useLoaderData();
@@ -296,30 +296,16 @@ export default function Shop() {
 
           {/* display filtered data */}
           <div>
-            {
+            {/* {
               loaderData.result.map((data: any) => (
                 <div key={data._id} className="bg-neutral-400 p-4 flex flex-col gap-2 rounded-md">
                   <p>{data.name}</p>
-                  {/* <p>Hello</p> */}
                 </div>
               ))
-            }
+            } */}
           </div>
 
-          {/* fetcher ? fetcher.map() : loader.map() */}
 
-          {/* <div>
-            {loaderData?.allCloths?.map((cloth: any) => (
-              <div key={cloth._id}>
-                <h3>{cloth.name}</h3>
-                <h3>#{cloth.price}</h3>
-                <img
-                  src={urlFor(cloth.image).width(300).url()}
-                  alt={cloth.slug || "Image-alt"}
-                />
-              </div>
-            ))}
-          </div> */}
         </main>
       </section>
 

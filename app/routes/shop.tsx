@@ -39,7 +39,7 @@ import {
 import Newsletter from "~/components/build/Newsletter";
 import FollowUs from "~/components/build/FollowUs";
 import clsx from "clsx";
-
+import useSWR from 'swr'
 // export async function Loader({ request }: LoaderFunctionArgs) {
 //   try {
 //     const url = new URL(request.url);
@@ -154,10 +154,13 @@ import clsx from "clsx";
 
 //   console.log("NOTAVALUE");
 //   return null;
-// }
+
+const fetcher = (url: any) => fetch(url).then(res => res.json())
 
 export default function Shop() {
-  // const loaderData: any = useLoaderData();
+  const { data, error, isLoading } = useSWR('https://dummyjson.com/products/category/womens-dresses', fetcher)
+  // console.log(data.products);
+  
   const [defaultLayout, setDefaultLayout] = useState("grid");
 
   const updateDefaultLayout = () => {
@@ -311,6 +314,14 @@ export default function Shop() {
                 }`}
               />
             </div>
+          </div>
+
+          <div>
+            {isLoading? 
+            <div>
+              
+            </div>
+            : "data"}
           </div>
         </main>
       </section>

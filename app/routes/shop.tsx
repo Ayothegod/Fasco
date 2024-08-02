@@ -1,8 +1,3 @@
-// import FollowUs from "../components/build/FollowUs";
-// import Newsletter from "../components/build/Newsletter";
-// import slider from "../fascoAsset/slider.png";
-// import client from "../sanity/client";
-
 import Filters from "../components/build/Filters";
 import Crucible from "../components/utils/Crucible";
 import { Menu, LayoutDashboard, LayoutGrid } from "lucide-react";

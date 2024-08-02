@@ -20,3 +20,61 @@
 //   vite_config_default as default
 // };
 // //# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCJDOlxcXFxBaW9cXFxcY29kZVxcXFxidWlsZFxcXFxyZW1peC1mYXNjby1lY29tbWVyY2VcIjtjb25zdCBfX3ZpdGVfaW5qZWN0ZWRfb3JpZ2luYWxfZmlsZW5hbWUgPSBcIkM6XFxcXEFpb1xcXFxjb2RlXFxcXGJ1aWxkXFxcXHJlbWl4LWZhc2NvLWVjb21tZXJjZVxcXFx2aXRlLmNvbmZpZy50c1wiO2NvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9pbXBvcnRfbWV0YV91cmwgPSBcImZpbGU6Ly8vQzovQWlvL2NvZGUvYnVpbGQvcmVtaXgtZmFzY28tZWNvbW1lcmNlL3ZpdGUuY29uZmlnLnRzXCI7aW1wb3J0IHsgdml0ZVBsdWdpbiBhcyByZW1peCB9IGZyb20gXCJAcmVtaXgtcnVuL2RldlwiO1xuaW1wb3J0IHsgZGVmaW5lQ29uZmlnIH0gZnJvbSBcInZpdGVcIjtcbmltcG9ydCB0c2NvbmZpZ1BhdGhzIGZyb20gXCJ2aXRlLXRzY29uZmlnLXBhdGhzXCI7XG5cbmV4cG9ydCBkZWZhdWx0IGRlZmluZUNvbmZpZyh7XG4gIHBsdWdpbnM6IFtcbiAgICByZW1peCh7XG4gICAgICBmdXR1cmU6IHtcbiAgICAgICAgdjNfZmV0Y2hlclBlcnNpc3Q6IHRydWUsXG4gICAgICAgIHYzX3JlbGF0aXZlU3BsYXRQYXRoOiB0cnVlLFxuICAgICAgICB2M190aHJvd0Fib3J0UmVhc29uOiB0cnVlLFxuICAgICAgfSxcbiAgICB9KSxcbiAgICB0c2NvbmZpZ1BhdGhzKCksXG4gIF0sXG59KTtcbiJdLAogICJtYXBwaW5ncyI6ICI7QUFBaVQsU0FBUyxjQUFjLGFBQWE7QUFDclYsU0FBUyxvQkFBb0I7QUFDN0IsT0FBTyxtQkFBbUI7QUFFMUIsSUFBTyxzQkFBUSxhQUFhO0FBQUEsRUFDMUIsU0FBUztBQUFBLElBQ1AsTUFBTTtBQUFBLE1BQ0osUUFBUTtBQUFBLFFBQ04sbUJBQW1CO0FBQUEsUUFDbkIsc0JBQXNCO0FBQUEsUUFDdEIscUJBQXFCO0FBQUEsTUFDdkI7QUFBQSxJQUNGLENBQUM7QUFBQSxJQUNELGNBQWM7QUFBQSxFQUNoQjtBQUNGLENBQUM7IiwKICAibmFtZXMiOiBbXQp9Cg==
+
+
+{
+    id: 178,
+    title: 'Corset Leather With Skirt',
+    description: 
+      'The Corset Leather With Skirt is a bold and edgy ensemble that combines a stylish corset with a matching skirt. Ideal for fashion-forward individuals, it makes a statement at any event.',
+    category: 'womens-dresses',
+    price: 89.99,
+    discountPercentage: 19.26,
+    rating: 2.52,
+    stock: 59,
+     stock: 59,
+    tags: [ 'clothing', 'corsets', 'skirts' ],
+    sku: 'TU384RG4',
+    weight: 1,
+    dimensions: { width: 19.1, height: 27.47, depth: 29.95 },
+    warrantyInformation: '6 months warranty',
+    shippingInformation: 'Ships overnight',
+    availabilityStatus: 'In Stock',
+    reviews: [
+      {
+        rating: 3,
+        comment: 'Very unhappy with my purchase!',
+        date: '2024-05-23T08:56:21.627Z',
+         reviewerName: 'Mason Parker',
+        reviewerEmail: 'mason.parker@x.dummyjson.com'
+      },
+      {
+        rating: 3,
+        comment: 'Would not recommend!',
+        date: '2024-05-23T08:56:21.627Z',
+        reviewerName: 'Grace Green',
+        reviewerEmail: 'grace.green@x.dummyjson.com'
+      },
+      {
+        rating: 4,
+        comment: 'Highly impressed!',
+          date: '2024-05-23T08:56:21.627Z',
+        reviewerName: 'Madison Stewart',
+        reviewerEmail: 'madison.stewart@x.dummyjson.com'
+      }
+    ],
+    returnPolicy: '60 days return policy',
+    minimumOrderQuantity: 4,
+    meta: {
+      createdAt: '2024-05-23T08:56:21.627Z',
+      updatedAt: '2024-05-23T08:56:21.627Z',
+      barcode: '5612433310069',
+      qrCode: 'https://assets.dummyjson.com/public/qr-code.png'
+         qrCode: 'https://assets.dummyjson.com/public/qr-code.png'
+    },
+    images: [
+      'https://cdn.dummyjson.com/products/images/womens-dresses/Corset%20Leather%20With%20Skirt/1.png', 'https://cdn.dummyjson.com/products/images/womens-dresses/Corset%20Leather%20With%20Skirt/2.png',
+      'https://cdn.dummyjson.com/products/images/womens-dresses/Corset%20Leather%20With%20Skirt/3.png', 'https://cdn.dummyjson.com/products/images/womens-dresses/Corset%20Leather%20With%20Skirt/4.png'
+    ],
+    thumbnail: 'https://cdn.dummyjson.com/products/images/womens-dresses/Corset%20Leather%20With%20Skirt/thumbnail.png'
+     }

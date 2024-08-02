@@ -19,11 +19,13 @@ export const navLink = [
   { name: "Shop", href: "/shop", withUser: true },
   { name: "Products", href: "/products", withUser: true },
   { name: "pages", href: "#", withUser: true },
-  { name: "Home", href: "#/", withUser: false },
-  { name: "Deals", href: "#deals", withUser: false },
+];
+
+export const noUserNavLink = [
+  { name: "Home", href: "/", withUser: false },
+  { name: "Shop", href: "/shop", withUser: false },
   { name: "New Arrivals", href: "#new-arrivals", withUser: false },
-  { name: "Packages", href: "#packages", withUser: false },
-  { name: "Sign in", withUser: false },
+  { name: "Sign in", href: "/login", withUser: false },
 ];
 
 export const imageNumbers = [1, 2, 3, 4, 5, 6];
@@ -54,4 +56,49 @@ export const tabsTrigger = [
   { value: "women-accessories", text: "Women Accessories" },
   { value: "men-accessories", text: "Men Accessories" },
   { value: "discount", text: "Discount Deals" },
+];
+
+export const testimonies = [
+  {
+    id: 1,
+    content: "Lorem ipsum dolor sit amet consectetur adipisicingelit.",
+    image: image1,
+    name: "James K.",
+    occupation: "Traveller",
+    ratings: 4.5,
+  },
+  {
+    id: 2,
+    content: "Lorem ipsum dolor sit amet consectetur adipisicingelit.",
+    image: image2,
+    name: "Mrs. Parker",
+    occupation: "Sales rep",
+    ratings: 4.2,
+  },
+  {
+    id: 3,
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicingelit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat,debitisullam accusamus est laboriosam aliquam.",
+    image: image3,
+    name: "Emmanual Adebayo",
+    occupation: "Software developer",
+    ratings: 4.0,
+  },
+  {
+    id: 4,
+    content: "Lorem ipsum dolor sit amet consectetur adipisicingelit.",
+    image: image4,
+    name: "Phillips Kelvin.",
+    occupation: "Gardener",
+    ratings: 3.5,
+  },
+  {
+    id: 5,
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, debitis ullam accusamus est laboriosam aliquam.",
+    image: image5,
+    name: "Hellen Yu",
+    occupation: "Teacher",
+    ratings: 2.5,
+  },
 ];

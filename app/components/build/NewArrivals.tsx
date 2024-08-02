@@ -8,6 +8,7 @@ import femaleSvg from "~/assets/fascoAsset/image 3.svg";
 // import femaleSvg from "../fascoAsset/image 3.svg";
 import { Button } from "../ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Link } from "@remix-run/react";
 
 export default function NewArrivals() {
   return (
@@ -54,7 +55,9 @@ export default function NewArrivals() {
         </div>
       </Tabs>
       <div className="mt-8 flex items-center justify-center ">
-        <Button className="w-full sm:w-fit sm:px-8">View More</Button>
+        <Link to="/shop">
+          <Button className="w-full sm:w-fit sm:px-8">View More</Button>
+        </Link>
       </div>
     </main>
   );

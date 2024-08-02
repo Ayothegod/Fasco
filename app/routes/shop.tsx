@@ -38,6 +38,7 @@ import clsx from "clsx";
 import useSWR from "swr";
 import { Skeleton } from "~/components/ui/skeleton";
 import slider from "~/assets/fascoAsset/slider.png";
+import { stateStore } from "~/lib/store";
 // export async function Loader({ request }: LoaderFunctionArgs) {
 //   try {
 //     const url = new URL(request.url);
@@ -156,15 +157,15 @@ import slider from "~/assets/fascoAsset/slider.png";
 const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
 export default function Shop() {
+  const { user } = stateStore();
   const { data, error, isLoading } = useSWR(
     "https://dummyjson.com/products/category/womens-dresses",
     fetcher
   );
-  // console.log(data);
   const [products, setProducts] = useState([]);
   useEffect(() => {
     if (data) {
-      setProducts(data.products); // Assuming data has a `products` field
+      setProducts(data.products);
     }
   }, [data]);
   // console.log(products);
@@ -365,7 +366,7 @@ export default function Shop() {
       </section>
 
       <section className="hidden md:block mt-16 mb-16">
-      <img src={slider} alt="top-banner-image" className="" />
+        <img src={slider} alt="top-banner-image" className="" />
       </section>
 
       <FollowUs />

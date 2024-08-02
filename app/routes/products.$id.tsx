@@ -40,8 +40,7 @@ export default function Product() {
     increaseQuantity,
     getItemQuantity,
   } = cartStore();
-  const { setOpenCartSidebar } = stateStore();
-  //   console.log(cart);
+  const { setOpenCartSidebar, user } = stateStore();
 
   const param = useParams();
   const { data, error, isLoading } = useSWR(
@@ -218,11 +217,16 @@ export default function Product() {
               <Button
                 className="flex items-center justify-center w-full gap-8"
                 onClick={addToCart}
+                disabled={!user}
               >
                 <ShoppingBag /> Add to cart
               </Button>
             ) : (
-              <Button className=" w-full" onClick={setOpenCartSidebar}>
+              <Button
+                disabled={!user}
+                className=" w-full"
+                onClick={setOpenCartSidebar}
+              >
                 Open cart
               </Button>
             )}

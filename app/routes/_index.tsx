@@ -1,5 +1,11 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { json, redirect, useLoaderData, useRouteError } from "@remix-run/react";
+import {
+  json,
+  Link,
+  redirect,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import DealsOfTheMonth from "~/components/build/DealsOfTheMonth";
 import FollowUs from "~/components/build/FollowUs";
 import NewArrivals from "~/components/build/NewArrivals";
@@ -20,6 +26,9 @@ import slider from "~/assets/fascoAsset/slider.png";
 import { requireUser } from "~/lib/actions/authActions";
 import LogOut from "~/components/utils/LogOut";
 import { commitSession } from "~/services/session.server";
+import { useEffect } from "react";
+import { getDataLinkHrefs } from "@remix-run/react/dist/links";
+import { stateStore } from "~/lib/store";
 
 export const meta: MetaFunction = () => {
   return [
@@ -30,29 +39,30 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   try {
-    // const user = await requireUser(request);
+    const user = await requireUser(request);
+    // console.log(user?.user);
 
-    // if (!user) {
-    //   return redirect("/login");
-    // }
-
-    const user = "";
-    // return json(
-    //   { user },
-    //   {
-    //     headers: {
-    //       "Set-Cookie": await commitSession(user.session),
-    //     },
-    //   }
-    // );
-    return json({ user });
+    return json(
+      { user: user },
+      {
+        headers: {
+          "Set-Cookie": await commitSession(user?.session),
+        },
+      }
+    );
   } catch (error) {
     return json({ error: "An error occured!" });
   }
 }
 
 export default function Index() {
-  // const data = useLoaderData();
+  const { updateUser, user } = stateStore();
+  const data: any = useLoaderData<typeof loader>();
+  console.log(user);
+
+  useEffect(() => {
+    updateUser(data?.user);
+  }, [data]);
 
   return (
     <main className="min-h-[50vh]">
@@ -79,7 +89,9 @@ export default function Index() {
             <h2 className="text-7xl md:text-4xl font-bold">ULTIMATE</h2>
             <h2 className="text-8xl md:text-7xl font-bold">SALE</h2>
             <p>NEW COLLECTION</p>
-            <Button>Sign up</Button>
+            <Link to="/shop">
+              <Button>Get started</Button>
+            </Link>
           </div>
 
           <div className="h-[20%] bg-pink-300 rounded-md ">

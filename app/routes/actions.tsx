@@ -26,7 +26,7 @@ export async function action({ request }: ActionFunctionArgs) {
     const mailgun = new Mailgun(FormData);
     const mg = mailgun.client({
       username: "api",
-      key: process.env.MAILGUN_API_KEY || 
+      key: process.env.MAILGUN_API_KEY || "88603b115ff2595b65db50ece658abca-afce6020-30aff0e2",
     });
 
     const data = {

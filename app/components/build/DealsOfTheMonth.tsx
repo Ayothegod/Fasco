@@ -4,11 +4,10 @@ import { imageCarouselArray } from "../../lib/database";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import DealsCountdown from "./DealsCountdown";
 import { Button } from "../ui/button";
+import { Link } from "@remix-run/react";
 
 export default function DealsOfTheMonth() {
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000 }) // stopOnInteraction: true
-  );
+  const plugin = React.useRef(Autoplay({ delay: 4000 }));
 
   return (
     <div className="pageStyle mt-8 mb-16 flex flex-col md:flex-row gap-8">
@@ -22,7 +21,9 @@ export default function DealsOfTheMonth() {
           corrupti repellat fugit corporis fugiat ab repellendus modi incidunt
           nulla at.
         </p>
-        <Button className="w-full sm:w-fit sm:px-8">Buy Now</Button>
+        <Link to="/shop">
+          <Button className="w-full sm:w-fit sm:px-8">Buy Now</Button>
+        </Link>
 
         <div className="">
           <h4 className="font-medium text-lg text-neutral-600 mt-4">

@@ -23,20 +23,19 @@ interface CartStore {
 }
 
 interface StateStore {
-  isUser: boolean;
-  updateIsUser: () => void;
+  user: string;
+  updateUser: (user: string) => void;
   openCartSidebar: boolean;
   setOpenCartSidebar: () => void;
 }
 
 export const stateStore = create<StateStore>((set) => ({
-  isUser: true,
+  user: "",
   openCartSidebar: false,
-  updateIsUser: () => set((state) => ({ isUser: !state.isUser })),
+  updateUser: (user) => set((state) => ({ user: user })),
   setOpenCartSidebar: () =>
     set((state) => ({ openCartSidebar: !state.openCartSidebar })),
 }));
-
 
 export const cartStore = create<CartStore>()(
   persist(

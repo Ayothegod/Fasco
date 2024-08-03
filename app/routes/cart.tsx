@@ -11,7 +11,8 @@ import { Button } from "~/components/ui/button";
 import { cartStore } from "~/lib/store";
 
 export default function Cart() {
-  const { cart, decreaseQuantity, increaseQuantity, getTotalCost } = cartStore();
+  const { cart, decreaseQuantity, increaseQuantity, getTotalCost } =
+    cartStore();
   return (
     <div className="pageStyle">
       <section className="pageStyle ">
@@ -102,8 +103,8 @@ export default function Cart() {
           <div className="mt-10 flex flex-col sm:justify-end sm:items-end gap-4">
             <div className="flex items-center justify-between gap-20">
               <p className=" font-bold">Subtotal</p>
-              <p className="font-bold">${(getTotalCost()).toFixed(2)}</p>
-            </div> 
+              <p className="font-bold">${getTotalCost().toFixed(2)}</p>
+            </div>
 
             <Link to="/checkout">
               <Button className="w-full sm:w-max sm:px-20">Checkout</Button>

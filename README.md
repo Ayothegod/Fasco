@@ -15,3 +15,7 @@
 - make the other images on product page smaller ezp width
 - make cart work properly
 - really create user on login and register
+- footer links
+
+- checkout
+- 

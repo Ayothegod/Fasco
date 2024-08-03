@@ -4,6 +4,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteLoaderData,
 } from "@remix-run/react";
 import "./tailwind.css";
 import Header from "./components/build/Header";
@@ -13,7 +14,9 @@ import { Lucia } from "lucia";
 import { Toaster } from "./components/ui/toaster";
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const {user} = stateStore()
+  const { user } = stateStore();
+  // const data = useRouteLoaderData("index");
+  // console.log(data);
 
   return (
     <html lang="en">

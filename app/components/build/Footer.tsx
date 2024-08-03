@@ -1,28 +1,39 @@
 import { Copyright } from "lucide-react";
 import IsAuthPage from "../utils/IsAuthPage";
-import { navLink } from "../../lib/database";
+import { navLink, noUserNavLink } from "../../lib/database";
 import { stateStore } from "~/lib/store";
 
 export default function Footer() {
   const year = new Date().getFullYear();
-  const user = stateStore((state: any) => state.isUser);
+  const { user } = stateStore();
+  console.log(user);
 
   return (
-    <IsAuthPage>
+    <IsAuthPage className="">
       <footer className="pageStyle pb-6">
         <div className=" flex flex-col md:flex-row  justify-between ">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold tracking-wide">
             FASCO
           </h1>
           <ul className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mt-4 md:mt-0">
-            {navLink.map((link, idx) => (
-              <p
-                key={idx}
-                className="text-sm md:text-base font-medium text-neutral-600"
-              >
-                {user && !link.withUser && <a href={link.href}>{link.name}</a>}
-              </p>
-            ))}
+            {user ? (
+              navLink.map((link, idx) => (
+                <p key={idx} className="text-sm md:text-base">
+                  {user && link.withUser && <a href={link.href}>{link.name}</a>}
+                  {!user && !link.withUser && (
+                    <a href={link.href}>{link.name}</a>
+                  )}
+                </p>
+              ))
+            ) : (
+              <div className="contents">
+                {noUserNavLink.map((data, idx) => (
+                  <p key={idx} className="text-sm md:text-base">
+                    <a href={data.href}>{data.name}</a>
+                  </p>
+                ))}
+              </div>
+            )}
           </ul>
         </div>
 

@@ -9,3 +9,9 @@
 
 - update all homepage copies, their notes
 - i want 4 good product reviews
+
+- register and login, forget password and confirm password
+- pagination for shop page
+- make the other images on product page smaller ezp width
+- make cart work properly
+- really create user on login and register

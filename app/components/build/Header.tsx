@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import IsAuthPage from "../utils/IsAuthPage";
 import { IsLoggedIn } from "../utils/IsLoggedIn";
 import { Await, Link } from "@remix-run/react";
-import { Search, ShoppingBag, Star, User } from "lucide-react";
+import { AlignRight, Search, ShoppingBag, Star, User } from "lucide-react";
 import {
   Sheet,
   SheetClose,
@@ -193,6 +193,46 @@ export default function Header({ user }: any) {
               </Sheet>
             </div>
           )}
+
+          <Sheet>
+            <SheetTrigger asChild>
+              <div className="md:hidden cursor-pointer">
+                <AlignRight className="h-8 w-8" />
+              </div>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle className="text-xl font-bold">Fasco</SheetTitle>
+              </SheetHeader>
+              <div>
+                <ul className=" md:hidden">
+                  {user &&
+                    navLink.map((link, idx) => (
+                      <p key={idx} className="text-sm md:text-base">
+                        {user && link.withUser && (
+                          <a href={link.href}>{link.name}</a>
+                        )}
+                        {!user && !link.withUser && (
+                          <a href={link.href}>{link.name}</a>
+                        )}
+                      </p>
+                    ))}
+                  {!user &&
+                    noUserNavLink.map((link, idx) => (
+                      <p key={idx} className="text-sm md:text-base">
+                        <p>TOP</p>
+                      </p>
+                    ))}
+                </ul>
+              </div>
+
+              {/* <SheetFooter>
+                <SheetClose asChild>
+                  <Button type="submit">Save changes</Button>
+                </SheetClose>
+              </SheetFooter> */}
+            </SheetContent>
+          </Sheet>
         </IsAuthPage>
       </header>
     </>

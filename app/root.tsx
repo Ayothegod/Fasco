@@ -10,6 +10,7 @@ import Header from "./components/build/Header";
 import Footer from "./components/build/Footer";
 import { stateStore } from "~/lib/store";
 import { Lucia } from "lucia";
+import { Toaster } from "./components/ui/toaster";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const {user} = stateStore()
@@ -24,6 +25,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="font-inter">
         <Header user={user} />
+        <Toaster />
         <div className="mb-20">{children}</div>
         <Footer />
         <ScrollRestoration />

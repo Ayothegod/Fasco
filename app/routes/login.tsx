@@ -39,7 +39,7 @@ export async function action({ request }: ActionFunctionArgs) {
     }
 
     session.set("user", submission.value.email);
-    // session.flash("data", { user: true, email: submission.value.email });
+    session.flash("data", "OLD_USER");
 
     return redirect("/", {
       headers: {
@@ -74,6 +74,7 @@ export default function LoginRoute() {
   return (
     <main className="pageStyle flex items-center justify-center">
       <div className="flex w-full sm:max-w-sm md:max-w-3xl border rounded-md overflow-hidden">
+
         <div className="md:max-w-[50%] hidden md:block">
           <img
             src={bannerImage}
@@ -81,11 +82,12 @@ export default function LoginRoute() {
             className="h-full w-full object-cover"
           />
         </div>
+
         <div className="w-full md:w-[50%] flex flex-col justify-center px-8 py-4 space-y-4">
           <h2 className="text-lg font-serif font-bold tracking-wide">
             Login to Fasco
           </h2>
-          <LogOut />
+          {/* <LogOut /> */}
 
           <div className="mt-2 flex flex-col md:flex-row items-center justify-center w-full gap-2">
             <Form method="post" className="contents">
@@ -121,18 +123,18 @@ export default function LoginRoute() {
             <div>
               <Input placeholder="Email Address" name="email" />
               {fields.email.errors ? (
-                <p className="text-xs text-red-500">{fields.email.errors}</p>
+                <p className="text-sm text-red-500">{fields.email.errors}</p>
               ) : null}
             </div>
 
             <div>
               <Input placeholder="Password" name="password" />
               {fields.password.errors ? (
-                <p className="text-xs text-red-500">{fields.password.errors}</p>
+                <p className="text-sm text-red-500">{fields.password.errors}</p>
               ) : null}
             </div>
 
-            <Button name="intent" value="login" className="w-full" size="sm">
+            <Button name="intent" value="login" className="w-full">
               Log in
             </Button>
           </Form>
@@ -145,8 +147,8 @@ export default function LoginRoute() {
           </Link>
 
           <div>
-            <span className="text-xs">
-              Already have an account?{" "}
+            <span className="text-sm">
+              are you a new user?{" "}
               <Link to="/register" className="underline">
                 register
               </Link>

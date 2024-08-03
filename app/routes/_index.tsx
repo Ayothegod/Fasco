@@ -29,6 +29,7 @@ import { commitSession } from "~/services/session.server";
 import { useEffect } from "react";
 import { getDataLinkHrefs } from "@remix-run/react/dist/links";
 import { stateStore } from "~/lib/store";
+import { useToast } from "~/components/ui/use-toast";
 
 export const meta: MetaFunction = () => {
   return [
@@ -40,10 +41,9 @@ export const meta: MetaFunction = () => {
 export async function loader({ request }: LoaderFunctionArgs) {
   try {
     const user = await requireUser(request);
-    // console.log(user?.user);
-
+    // console.log(user);
     return json(
-      { user: user },
+      { user: user?.user, data: user?.data },
       {
         headers: {
           "Set-Cookie": await commitSession(user?.session),
@@ -56,17 +56,26 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Index() {
+  const { toast } = useToast();
   const { updateUser, user } = stateStore();
   const data: any = useLoaderData<typeof loader>();
+  let authUser = data?.user;
+  let flashData = data?.data;
+
   console.log(user);
 
   useEffect(() => {
-    updateUser(data?.user);
+    updateUser(authUser);
   }, [data]);
 
   return (
     <main className="min-h-[50vh]">
       <LogOut />
+
+      {/* {flashData &&
+        toast({
+          description: "LoggedIn Successfully.",
+        })} */}
 
       <section className="pageStyle grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="hidden md:block w-full h-[400px] md:h-[500px] bg-gray-300 rounded-md">

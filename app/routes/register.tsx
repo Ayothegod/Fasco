@@ -135,7 +135,7 @@ export default function RegisterRoute() {
 
           <Link
             to="/terms"
-            className="mt-10 md:mt-auto text-xs text-blue-500 hover:text-blue-600 font-light text-right"
+            className="mt-10 md:mt-auto text-xs text-red-500 hover:text-red-600 font-light text-right"
           >
             Fasco Terms and Conditions
           </Link>

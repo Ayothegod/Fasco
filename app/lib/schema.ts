@@ -31,6 +31,20 @@ export const newsletterInputSchema = z.object({
     .min(1, "enter a longer email"),
 });
 
+export const forgetPasword = z.object({
+  email: z
+    .string({ required_error: "Enter your email." })
+    .email()
+    .min(1, "enter a longer email"),
+});
+
+export const confirmOtp = z.object({
+  otp: z
+    .string({ required_error: "Enter the 6 digits otp code." })
+    .min(6, "your otp is not complete.")
+    .max(6, "your otp is more than required."),
+});
+
 function generateUserID(length: number) {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

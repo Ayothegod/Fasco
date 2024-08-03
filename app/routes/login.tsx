@@ -74,7 +74,6 @@ export default function LoginRoute() {
   return (
     <main className="pageStyle flex items-center justify-center">
       <div className="flex w-full sm:max-w-sm md:max-w-3xl border rounded-md overflow-hidden">
-
         <div className="md:max-w-[50%] hidden md:block">
           <img
             src={bannerImage}
@@ -129,6 +128,9 @@ export default function LoginRoute() {
 
             <div>
               <Input placeholder="Password" name="password" />
+              <Link to="/auth/forget-password">
+                <p className="text-right text-sm text-red-600 underline my-2">Forget password?</p>
+              </Link>
               {fields.password.errors ? (
                 <p className="text-sm text-red-500">{fields.password.errors}</p>
               ) : null}
@@ -141,7 +143,7 @@ export default function LoginRoute() {
 
           <Link
             to="/terms"
-            className="mt-10 md:mt-auto text-xs text-blue-500 hover:text-blue-600 font-light text-right"
+            className="mt-10 md:mt-auto text-xs text-red-500 hover:text-red-600 font-light text-right"
           >
             Fasco Terms and Conditions
           </Link>

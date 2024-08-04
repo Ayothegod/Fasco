@@ -1,6 +1,6 @@
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { Form, json, Link, redirect, useActionData } from "@remix-run/react";
+import { Form, json, Link, redirect, useActionData, useNavigation } from "@remix-run/react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import LogOut from "../components/utils/LogOut";
@@ -9,10 +9,12 @@ import { registerSchema } from "../lib/schema";
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { commitSession, getSession } from "~/services/session.server";
 import { requireUser } from "~/lib/actions/authActions";
+import { prisma } from "~/lib/prisma";
+import argon2 from "argon2";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
-//   console.log(user);
+  //   console.log(user);
 
   if (user) {
     return redirect("/");
@@ -34,7 +36,31 @@ export async function action({ request }: ActionFunctionArgs) {
       return submission.reply();
     }
 
-    // create user
+    const userExists = await prisma.user.findUnique({
+      where: {
+        email: submission.value.email,
+      },
+    });
+
+    if (userExists) {
+      // console.log("USER EXISTS");
+      return submission.reply({
+        fieldErrors: {
+          email: ["email address already exists"],
+        },
+      });
+    }
+
+    const hashedPassword = await argon2.hash(submission.value.password);
+
+    const user = await prisma.user.create({
+      data: {
+        email: submission.value.email,
+        password: hashedPassword,
+        fullname: submission.value.fullname,
+      },
+    });
+
     session.set("user", submission.value.email);
     session.flash("data", "NEW_USER");
 
@@ -50,6 +76,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function RegisterRoute() {
+  const { state } = useNavigation();
   const lastResult: any = useActionData();
   const [form, fields] = useForm({
     lastResult,
@@ -129,7 +156,7 @@ export default function RegisterRoute() {
             </div>
 
             <Button name="intent" value="signInWithPassword" className="w-full">
-              Create Account
+            {state === "loading" ? "Loading" : "Create account"}
             </Button>
           </Form>
 

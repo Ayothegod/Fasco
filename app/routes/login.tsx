@@ -5,7 +5,14 @@ import { parseWithZod } from "@conform-to/zod";
 import { useForm } from "@conform-to/react";
 import { loginSchema } from "../lib/schema";
 import LogOut from "../components/utils/LogOut";
-import { Form, json, Link, redirect, useActionData } from "@remix-run/react";
+import {
+  Form,
+  json,
+  Link,
+  redirect,
+  useActionData,
+  useNavigation,
+} from "@remix-run/react";
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import {
   getSession,
@@ -13,6 +20,8 @@ import {
   destroySession,
 } from "~/services/session.server";
 import { requireUser } from "~/lib/actions/authActions";
+import { prisma } from "~/lib/prisma";
+import argon2 from "argon2";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
@@ -38,9 +47,37 @@ export async function action({ request }: ActionFunctionArgs) {
       return submission.reply();
     }
 
+    const userExists = await prisma.user.findUnique({
+      where: {
+        email: submission.value.email,
+      },
+    });
+
+    if (!userExists) {
+      return submission.reply({
+        fieldErrors: {
+          password: ["email or password is not correct"],
+        },
+      });
+    }
+
+    const hashedPassword = await argon2.verify(
+      userExists.password,
+      submission.value.password
+    );
+
+    if (!hashedPassword) {
+      return submission.reply({
+        fieldErrors: {
+          password: ["email or password is not correct"],
+        },
+      });
+    }
+
     session.set("user", submission.value.email);
     session.flash("data", "OLD_USER");
 
+    // return null
     return redirect("/", {
       headers: {
         "Set-Cookie": await commitSession(session),
@@ -61,14 +98,15 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function LoginRoute() {
+  const { state } = useNavigation();
   const lastResult: any = useActionData<typeof action>();
   const [form, fields] = useForm({
     lastResult,
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: loginSchema });
     },
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
+    shouldValidate: "onSubmit",
+    shouldRevalidate: "onSubmit",
   });
 
   return (
@@ -128,16 +166,18 @@ export default function LoginRoute() {
 
             <div>
               <Input placeholder="Password" name="password" />
-              <Link to="/auth/forget-password">
-                <p className="text-right text-sm text-red-600 underline my-2">Forget password?</p>
-              </Link>
               {fields.password.errors ? (
                 <p className="text-sm text-red-500">{fields.password.errors}</p>
               ) : null}
+              <Link to="/auth/forget-password">
+                <p className="text-right text-sm text-red-600 underline my-2">
+                  Forget password?
+                </p>
+              </Link>
             </div>
 
             <Button name="intent" value="login" className="w-full">
-              Log in
+              {state === "loading" ? "Loading" : "Log in"}
             </Button>
           </Form>
 

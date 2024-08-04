@@ -63,12 +63,12 @@ export default function Index() {
   const data: any = useLoaderData<typeof loader>();
   let authUser = data?.user;
   let flashData = data?.data;
+  console.log(flashData);
+  
 
-  console.log(user);
-
-  useEffect(() => {
-    updateUser(authUser);
-  }, [data]);
+  // useEffect(() => {
+  //   updateUser(authUser);
+  // }, [data]);
 
   return (
     <main className="min-h-[50vh]">

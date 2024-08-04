@@ -31,6 +31,8 @@ import { getDataLinkHrefs } from "@remix-run/react/dist/links";
 import { stateStore } from "~/lib/store";
 import { useToast } from "~/components/ui/use-toast";
 
+export const handle = { id: "routes/index" };
+
 export const meta: MetaFunction = () => {
   return [
     { title: "New Remix App" },

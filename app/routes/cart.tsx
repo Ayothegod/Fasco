@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link, useRouteLoaderData } from "@remix-run/react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,8 +11,12 @@ import { Button } from "~/components/ui/button";
 import { cartStore } from "~/lib/store";
 
 export default function Cart() {
+  const data = useRouteLoaderData("root");
+  console.log(data);
+
   const { cart, decreaseQuantity, increaseQuantity, getTotalCost } =
     cartStore();
+
   return (
     <div className="pageStyle">
       <section className="pageStyle ">

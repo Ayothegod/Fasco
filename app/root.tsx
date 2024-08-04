@@ -1,9 +1,11 @@
 import {
+  json,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
   useRouteLoaderData,
 } from "@remix-run/react";
 import "./tailwind.css";
@@ -12,11 +14,22 @@ import Footer from "./components/build/Footer";
 import { stateStore } from "~/lib/store";
 import { Lucia } from "lucia";
 import { Toaster } from "./components/ui/toaster";
+import { LoaderFunctionArgs } from "@remix-run/node";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  try {
+    const user = "Ayomide";
+    return json({ user });
+  } catch (error) {
+    return json({ error: "An error occured!" });
+  }
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data: any = useLoaderData()
+  console.log(data);
+  
   const { user } = stateStore();
-  // const data = useRouteLoaderData("index");
-  // console.log(data);
 
   return (
     <html lang="en">

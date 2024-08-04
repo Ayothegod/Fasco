@@ -2,12 +2,18 @@ import maleSvg from "~/assets/fascoAsset/image 2.svg";
 import femaleSvg from "~/assets/fascoAsset/image 3.svg";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Form, useActionData, useFetcher } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useFetcher,
+  useNavigation,
+} from "@remix-run/react";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { newsletterInputSchema } from "~/lib/schema";
 
 export default function Newsletter() {
+  const { state } = useNavigation();
   const fetcher = useFetcher();
   const lastResult: any = fetcher.data;
   console.log(fetcher.data);
@@ -53,9 +59,9 @@ export default function Newsletter() {
             name="intent"
             value="subscribe"
             type="submit"
-            disabled={fetcher.state === "submitting"}
+            disabled={fetcher.state === "submitting" || state === "loading"}
           >
-            Subscribe Now
+            {state === "loading" ? "Loading" : "Subscribe Now"}
           </Button>
         </fetcher.Form>
 

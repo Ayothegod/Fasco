@@ -1,13 +1,20 @@
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, json, Link, redirect, useActionData } from "@remix-run/react";
+import {
+  Form,
+  json,
+  Link,
+  redirect,
+  useActionData,
+  useNavigation,
+} from "@remix-run/react";
 import bannerImage from "~/assets/fascoAsset/Rectangle 19280.png";
 import { Label } from "~/components/ui/label";
 import { requireUser } from "~/lib/actions/authActions";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { forgetPasword } from "../lib/schema";
+import { forgetPasword, generateUserID } from "../lib/schema";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
@@ -27,11 +34,18 @@ export async function action({ request }: ActionFunctionArgs) {
     return submission.reply();
   }
 
+  const otp = await generateUserID(6)
+  console.log(otp);
+  console.log(process.env.MAILGUN_API_KEY);
+
   console.log(submission.value);
+  return null
   return redirect("/auth/confirm-otp");
 }
 
 export default function ForgetPassword() {
+  const { state } = useNavigation();
+
   const lastResult: any = useActionData<typeof action>();
   const [form, fields] = useForm({
     lastResult,
@@ -67,7 +81,9 @@ export default function ForgetPassword() {
               ) : null}
             </div>
 
-            <Button className="w-full" type="submit">Send confirmation code</Button>
+            <Button className="w-full" type="submit">
+              {state === "loading" ? "Loading" : "Send confirmation code"}
+            </Button>
           </Form>
 
           <div>

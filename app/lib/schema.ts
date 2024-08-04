@@ -55,7 +55,7 @@ export const changePassword = z
     path: ["confirmPassword"],
   });
 
-function generateUserID(length: number) {
+export function generateUserID(length: number) {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const charactersLength = characters.length;

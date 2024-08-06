@@ -3,7 +3,7 @@ import { navLink, loggedInIcons, noUserNavLink } from "../../lib/database";
 import { Button } from "../ui/button";
 import IsAuthPage from "../utils/IsAuthPage";
 import { IsLoggedIn } from "../utils/IsLoggedIn";
-import { Await, Link } from "@remix-run/react";
+import { Await, Link, useLocation } from "@remix-run/react";
 import { AlignRight, Search, ShoppingBag, Star, User } from "lucide-react";
 import {
   Sheet,
@@ -21,8 +21,12 @@ import { Checkbox } from "../ui/checkbox";
 import { cartStore, stateStore } from "~/lib/store";
 
 export default function Header({ user }: any) {
-  const { cart, decreaseQuantity, increaseQuantity, clearCart } = cartStore();
+  const { cart, decreaseQuantity, increaseQuantity, clearCart, getTotalCost } = cartStore();
   const { openCartSidebar, setOpenCartSidebar } = stateStore();
+  const location = useLocation();
+  const path = location.pathname;
+  // console.log(path);
+
   return (
     <>
       <header className="pageStyle flex items-center justify-between py-6">
@@ -37,10 +41,7 @@ export default function Header({ user }: any) {
             {user ? (
               navLink.map((link, idx) => (
                 <p key={idx} className="text-sm md:text-base">
-                  {user && link.withUser && <a href={link.href}>{link.name}</a>}
-                  {!user && !link.withUser && (
-                    <a href={link.href}>{link.name}</a>
-                  )}
+                  {user && <a href={link.href}>{link.name}</a>}
                 </p>
               ))
             ) : (
@@ -55,7 +56,7 @@ export default function Header({ user }: any) {
           </ul>
 
           {user && (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <div className=" p-2">
                 <Search className="cursor-pointer" />
               </div>
@@ -139,12 +140,11 @@ export default function Header({ user }: any) {
                               </div>
 
                               <div>
-                                {parseFloat((item.price * 3).toFixed(2))}
+                                {parseFloat((item.quantity * item.price).toFixed(2))}
                               </div>
                             </div>
                           </div>
                         ))}
-
                         <Button variant="link" onClick={clearCart}>
                           Clear cart
                         </Button>
@@ -154,7 +154,7 @@ export default function Header({ user }: any) {
 
                   <SheetFooter className="mt-auto">
                     <div className="flex flex-col w-full divide-y-2">
-                      <div className="flex items-center justify-between text-sm pb-2">
+                      {/* <div className="flex items-center justify-between text-sm pb-2">
                         <div className="flex items-center gap-2">
                           <Checkbox id="fast-shipping" />
                           <Label htmlFor="fast-shipping">
@@ -162,13 +162,13 @@ export default function Header({ user }: any) {
                           </Label>
                         </div>
                         <span>$10.00</span>
-                      </div>
+                      </div> */}
 
                       <div className="w-full flex flex-col gap-2 pt-2">
                         <div className="flex items-center justify-between">
                           <p className="font-medium text-sm">Subtotal</p>
                           <span className="font-medium text-sm">
-                            ${"amount"}
+                            ${getTotalCost().toFixed(2)}
                           </span>
                         </div>
                         <SheetClose asChild>
@@ -194,6 +194,7 @@ export default function Header({ user }: any) {
             </div>
           )}
 
+          {/* Mobile nav */}
           <Sheet>
             <SheetTrigger asChild>
               <div className="md:hidden cursor-pointer">
@@ -202,26 +203,35 @@ export default function Header({ user }: any) {
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
-                <SheetTitle className="text-xl font-bold">Fasco</SheetTitle>
+                <SheetTitle className="text-2xl font-bold text-left mb-2">
+                  Fasco
+                </SheetTitle>
               </SheetHeader>
               <div>
-                <ul className=" md:hidden">
+                <ul className=" md:hidden space-y-2">
                   {user &&
                     navLink.map((link, idx) => (
-                      <p key={idx} className="text-sm md:text-base">
-                        {user && link.withUser && (
-                          <a href={link.href}>{link.name}</a>
-                        )}
-                        {!user && !link.withUser && (
-                          <a href={link.href}>{link.name}</a>
-                        )}
-                      </p>
+                      <a href={link.href} key={idx}>
+                        <p
+                          className={`${
+                            path === link.href && "bg-neutral-200/30"
+                          } py-2 px-2 hover:bg-neutral-200/30 rounded-md mb-1 font-medium`}
+                        >
+                          {link.name}
+                        </p>
+                      </a>
                     ))}
                   {!user &&
                     noUserNavLink.map((link, idx) => (
-                      <p key={idx} className="text-sm md:text-base">
-                        <p>TOP</p>
-                      </p>
+                      <a href={link.href} key={idx}>
+                        <p
+                          className={`${
+                            path === link.href && "bg-neutral-200/30"
+                          } py-2 px-2 hover:bg-neutral-200/30 rounded-md mb-1 font-medium`}
+                        >
+                          {link.name}
+                        </p>
+                      </a>
                     ))}
                 </ul>
               </div>

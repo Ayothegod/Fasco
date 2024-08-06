@@ -27,10 +27,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const data: any = useLoaderData()
-  console.log(data);
   
-  const { user } = stateStore();
-
   return (
     <html lang="en">
       <head>
@@ -40,10 +37,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="font-inter">
-        <Header user={user} />
+        <Header user={data.user} />
         <Toaster />
         <div className="mb-20">{children}</div>
-        <Footer />
+        <Footer user={data.user} />
         <ScrollRestoration />
         <Scripts />
       </body>

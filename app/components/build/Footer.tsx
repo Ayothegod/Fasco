@@ -3,10 +3,8 @@ import IsAuthPage from "../utils/IsAuthPage";
 import { navLink, noUserNavLink } from "../../lib/database";
 import { stateStore } from "~/lib/store";
 
-export default function Footer() {
+export default function Footer({ user }: any) {
   const year = new Date().getFullYear();
-  const { user } = stateStore();
-  console.log(user);
 
   return (
     <IsAuthPage className="">
@@ -18,19 +16,16 @@ export default function Footer() {
           <ul className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mt-4 md:mt-0">
             {user ? (
               navLink.map((link, idx) => (
-                <p key={idx} className="text-sm md:text-base">
-                  {user && link.withUser && <a href={link.href}>{link.name}</a>}
-                  {!user && !link.withUser && (
-                    <a href={link.href}>{link.name}</a>
-                  )}
-                </p>
+                <a href={link.href} key={idx}>
+                  <p className="text-sm md:text-base">{link.name}</p>
+                </a>
               ))
             ) : (
               <div className="contents">
                 {noUserNavLink.map((data, idx) => (
-                  <p key={idx} className="text-sm md:text-base">
-                    <a href={data.href}>{data.name}</a>
-                  </p>
+                  <a href={data.href} key={idx}>
+                    <p className="text-sm md:text-base">{data.name}</p>
+                  </a>
                 ))}
               </div>
             )}

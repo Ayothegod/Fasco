@@ -15,17 +15,17 @@ export const loggedInIcons = [
 ];
 
 export const navLink = [
-  { name: "Home", href: "/", withUser: true },
-  { name: "Shop", href: "/shop", withUser: true },
-  { name: "Products", href: "/products", withUser: true },
-  { name: "pages", href: "#", withUser: true },
+  { name: "Home", href: "/" },
+  { name: "Shop", href: "/shop" },
+  { name: "Products", href: "/products" },
+  { name: "pages", href: "#" },
 ];
 
 export const noUserNavLink = [
-  { name: "Home", href: "/", withUser: false },
-  { name: "Shop", href: "/shop", withUser: false },
-  { name: "New Arrivals", href: "#new-arrivals", withUser: false },
-  { name: "Sign in", href: "/login", withUser: false },
+  { name: "Home", href: "/" },
+  { name: "Shop", href: "/shop" },
+  { name: "New Arrivals", href: "#new-arrivals" },
+  { name: "Sign in", href: "/login" },
 ];
 
 export const imageNumbers = [1, 2, 3, 4, 5, 6];

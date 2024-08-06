@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { useParams } from "@remix-run/react";
+import { useParams, useRouteLoaderData } from "@remix-run/react";
 import {
   Car,
   ReceiptText,
@@ -27,12 +27,14 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { cartStore, stateStore } from "~/lib/store";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  //   console.log(params);
   return null;
 }
 
 const fetcher = (url: any) => fetch(url).then((res) => res.json());
 export default function Product() {
+  const user: any = useRouteLoaderData("routes/products")
+  // console.log(user);
+  
   const {
     cart,
     addItemToCart,
@@ -40,7 +42,7 @@ export default function Product() {
     increaseQuantity,
     getItemQuantity,
   } = cartStore();
-  const { setOpenCartSidebar, user } = stateStore();
+  const { setOpenCartSidebar } = stateStore();
 
   const param = useParams();
   const { data, error, isLoading } = useSWR(
@@ -53,7 +55,6 @@ export default function Product() {
   const buttonSelected = (button: any) => {
     const selected = button ? button : selectedSize;
     setSelectedSize(button);
-    console.log(selected);
   };
 
   const quantity: any = getItemQuantity(data?.id);
@@ -217,7 +218,7 @@ export default function Product() {
               <Button
                 className="flex items-center justify-center w-full gap-8"
                 onClick={addToCart}
-                disabled={!user}
+                disabled={!user.user}
               >
                 <ShoppingBag /> Add to cart
               </Button>

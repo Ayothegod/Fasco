@@ -1,29 +1,13 @@
-import Filters from "../components/build/Filters";
-import Crucible from "../components/utils/Crucible";
-import { Menu, LayoutDashboard, LayoutGrid } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectScrollDownButton,
-  SelectTrigger,
-  SelectValue,
-  SelectScrollUpButton,
-  SelectSeparator,
-} from "../components/ui/select";
-import { Button } from "../components/ui/button";
-import { useEffect, useState } from "react";
-import { Input } from "../components/ui/input";
 import {
   Form,
-  json,
-  Link,
-  redirect,
-  useLoaderData,
-  useSearchParams,
+  Link
 } from "@remix-run/react";
+import { LayoutGrid, Menu } from "lucide-react";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
+import slider from "~/assets/fascoAsset/slider.png";
+import FollowUs from "~/components/build/FollowUs";
+import Newsletter from "~/components/build/Newsletter";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -32,13 +16,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "~/components/ui/breadcrumb";
-import Newsletter from "~/components/build/Newsletter";
-import FollowUs from "~/components/build/FollowUs";
-import clsx from "clsx";
-import useSWR from "swr";
 import { Skeleton } from "~/components/ui/skeleton";
-import slider from "~/assets/fascoAsset/slider.png";
 import { stateStore } from "~/lib/store";
+import { Button } from "../components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue
+} from "../components/ui/select";
 // export async function Loader({ request }: LoaderFunctionArgs) {
 //   try {
 //     const url = new URL(request.url);

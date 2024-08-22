@@ -18,4 +18,3 @@
 - footer links
 
 - checkout
-- 

@@ -43,7 +43,6 @@ export const meta: MetaFunction = () => {
 export async function loader({ request }: LoaderFunctionArgs) {
   try {
     const user = await requireUser(request);
-    // console.log(user);
     return json(
       { user: user?.user, data: user?.data },
       {

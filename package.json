@@ -6,10 +6,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate",
+    "studio": "prisma studio",
+    "seed":"prisma seed.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
+    "@prisma/client": "5.22.0",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
     "astro": "^5.9.0",

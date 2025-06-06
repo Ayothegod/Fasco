@@ -9,16 +9,16 @@ export default defineConfig({
   env: {
     schema: {
       GITHUB_CLIENT_ID: envField.string({
-        context: "client",
-        access: "public",
+        context: "server",
+        access: "secret",
       }),
       GITHUB_CLIENT_SECRET: envField.string({
         context: "server",
-        access: "public",
+        access: "secret",
       }),
       GOOGLE_CLIENT_ID: envField.string({
-        context: "client",
-        access: "public",
+        context: "server",
+        access: "secret",
       }),
       GOOGLE_CLIENT_SECRET: envField.string({
         context: "server",

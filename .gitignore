@@ -24,3 +24,8 @@ pnpm-debug.log*
 .idea/
 
 /src/generated/prisma
+
+# Prisma related
+prisma/dev.db-journal
+prisma/dev.db
+prisma/migrations

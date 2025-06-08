@@ -1,12 +1,11 @@
 
 import { Brain } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/shared/components/ui/button";
 import { Separator } from "@/shared/components/ui/separator";
 import { authClient } from "@/shared/lib/auth-client";
+import { navigate } from "astro:transitions/client";
 
 export default function SignupPage() {
-  const navigate = useNavigate();
 
   const githubSignup = async () => {
     const { data, error } = await authClient.signIn.social({
@@ -109,12 +108,12 @@ export default function SignupPage() {
         <Button onClick={register}>With email and password</Button>
         <div className="text-center text-sm">
           Already have an account?{" "}
-          <Link
-            to="/login"
+          <a 
+            href="/login"
             className="text-primary underline-offset-4 hover:underline"
           >
             Log in
-          </Link>
+          </a>
         </div>
       </div>
     </div>

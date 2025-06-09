@@ -1,4 +1,4 @@
-
+import { prisma } from "@/core/database/prisma";
 import type { APIRoute } from "astro";
 
 export async function GET({}) {
@@ -20,6 +20,20 @@ export const POST: APIRoute = async ({ request, params, url }) => {
 
   const body = await request.json();
   console.log(body);
+
+
+  const user = await prisma.user.create({
+    data: {
+      email: "heyaomideadebisi@gmail.com",
+      name: "Ayomide",
+      emailVerified: false,
+      id: "dkdakjajka",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  });
+
+  console.log(user);
 
   return new Response(JSON.stringify({ data: body }), {
     status: 200,

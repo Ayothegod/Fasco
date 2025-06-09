@@ -33,8 +33,6 @@ export default function SignupPage() {
     console.log(error);
   };
 
-  // http://localhost:5000/api/auth/sign-up/email 403 (Forbidden)
-
   const register = async () => {
     const { data, error } = await authClient.signUp.email(
       {

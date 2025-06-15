@@ -1,12 +1,61 @@
 ---
 import Layout from "@/shared/layouts/Layout.astro";
 import TestPage from "../shared/components/test";
+// <!-- <TestPage client:load /> -->
+// <!-- <a href="/signup" class="text-3xl">Vist the signup page</a> -->
+
+import {
+  default as leftBanner,
+  default as rightBanner,
+} from "@/assets/images/";
 ---
 
 <Layout
   title="Fasco | Trendy Fashion for Men & Women"
-  description="The home of high fashion."
+  description="Discover stylish clothes, shoes, glasses, and accessories for men and women at Fasco. Fashion-forward, quality-first, always in style."
 >
-  <!-- <TestPage client:load /> -->
-  <!-- <a href="/signup" class="text-3xl">Vist the signup page</a> -->
+<div>
+      <section className="pageStyle grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="hidden md:block w-full h-[400px] md:h-[500px] bg-gray-300 rounded-md">
+          <img
+            src={leftBanner}
+            alt="top-banner-image"
+            className="h-full w-full object-cover object-top"
+          />
+        </div>
+        <div className="w-full min-h-[80vh] md:h-[500px] bg-white rounded-md flex flex-col">
+          <div className="h-[20%] bg-gray-300 rounded-md">
+            <img
+              src={topBanner}
+              alt="top-banner-image"
+              className="h-full w-full object-cover object-top"
+            />
+          </div>
+
+          <div className="h-[60%] p-4 border text-center flex flex-col items-center justify-center gap-4">
+            <h2 className="text-7xl md:text-4xl font-bold">ULTIMATE</h2>
+            <h2 className="text-8xl md:text-7xl font-bold">SALE</h2>
+            <p>NEW COLLECTION</p>
+            <Link to="/shop">
+              <Button>Get started</Button>
+            </Link>
+          </div>
+
+          <div className="h-[20%] bg-pink-300 rounded-md ">
+            <img
+              src={bottomBanner}
+              alt="bottom-banner-image"
+              className="h-full w-full object-cover object-top"
+            />
+          </div>
+        </div>
+        <div className="hidden md:block w-full h-[400px] md:h-[500px] bg-gray-300 rounded-md">
+          <img
+            src={rightBanner}
+            alt="top-banner-image"
+            className="h-full w-full object-cover object-top"
+          />
+        </div>
+      </section>
+</div>
 </Layout>

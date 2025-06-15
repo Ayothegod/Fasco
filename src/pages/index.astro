@@ -1,18 +1,13 @@
 ---
-import Layout from '@/modules/layouts/Layout.astro';
-import TestPage from '../shared/components/test';
-import Welcome from '../shared/components/Welcome.astro';
-
-// import { GITHUB_CLIENT_SECRET, GOOGLE_CLIENT_SECRET, GITHUB_CLIENT_ID, GOOGLE_CLIENT_ID } from "astro:env/server";
-// console.log(import.meta.env.GITHUB_CLIENT_SECRET);
-
+import Layout from "@/modules/layouts/Layout.astro";
+import TestPage from "../shared/components/test";
 ---
 
-<Layout>
-	<!-- <Welcome /> -->
-	<TestPage client:load />
+<Layout
+  title="Fasco | Trendy Fashion for Men & Women"
+  description="The home of high fashion."
+>
+  <TestPage client:load />
 
-
-
-	<a href="/signup" class="text-3xl">Vist the signup page</a>
+  <a href="/signup" class="text-3xl">Vist the signup page</a>
 </Layout>

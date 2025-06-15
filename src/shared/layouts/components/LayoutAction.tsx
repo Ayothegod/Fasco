@@ -1,9 +1,22 @@
 // import type { User } from "@prisma/client";
-import { Search, Star, User } from "lucide-react";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/shared/components/ui/sheet";
+import { Search, ShoppingBag, Star, User } from "lucide-react";
 import React from "react";
 
 export default function LayoutAction({ user }: any) {
   console.log(user);
+  const cart: any[] = [];
 
   return (
     <>
@@ -19,9 +32,10 @@ export default function LayoutAction({ user }: any) {
             <Star className="cursor-pointer" />
           </div>
 
-          <Sheet open={openCartSidebar} onOpenChange={setOpenCartSidebar}>
+          {/* <Sheet open={openCartSidebar} onOpenChange={setOpenCartSidebar}> */}
+          <Sheet>
             <SheetTrigger asChild>
-              <div className="relative">
+              <div className="relative mr-2">
                 <ShoppingBag className="cursor-pointer" />
                 <div className="absolute -top-2 -right-2 rounded-full h-5 w-5 bg-red-600 flex items-center justify-center">
                   <span className="text-xs text-white">{cart.length}</span>
@@ -64,7 +78,7 @@ export default function LayoutAction({ user }: any) {
                             <Button
                               className="rounded-none rounded-l-md"
                               variant="outline"
-                              onClick={() => decreaseQuantity(item?.id)}
+                              // onClick={() => decreaseQuantity(item?.id)}
                             >
                               -
                             </Button>
@@ -74,7 +88,7 @@ export default function LayoutAction({ user }: any) {
                             <Button
                               className="rounded-none rounded-r-md "
                               variant="outline"
-                              onClick={() => increaseQuantity(item?.id)}
+                              // onClick={() => increaseQuantity(item?.id)}
                             >
                               +
                             </Button>
@@ -88,9 +102,10 @@ export default function LayoutAction({ user }: any) {
                         </div>
                       </div>
                     ))}
-                    <Button variant="link" onClick={clearCart}>
+                    {/* <Button variant="link" onClick={clearCart}>
                       Clear cart
-                    </Button>
+                    </Button> */}
+                    Clear cart
                   </>
                 )}
               </div>
@@ -111,23 +126,20 @@ export default function LayoutAction({ user }: any) {
                     <div className="flex items-center justify-between">
                       <p className="font-medium text-sm">Subtotal</p>
                       <span className="font-medium text-sm">
-                        ${getTotalCost().toFixed(2)}
+                        {/* ${getTotalCost().toFixed(2)} */}
                       </span>
                     </div>
                     <SheetClose asChild>
-                      <Link to="/checkout">
+                      <a href="/checkout">
                         <Button type="submit" className="w-full">
                           Checkout now
                         </Button>
-                      </Link>
+                      </a>
                     </SheetClose>
                     <SheetClose asChild>
-                      <Link
-                        to="/cart"
-                        className="underline text-center text-sm"
-                      >
+                      <a href="/cart" className="underline text-center text-sm">
                         View Cart
-                      </Link>
+                      </a>
                     </SheetClose>
                   </div>
                 </div>

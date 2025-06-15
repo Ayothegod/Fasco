@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+// import type { User } from "@prisma/client";
 import { Search, Star, User } from "lucide-react";
 import React from "react";
 

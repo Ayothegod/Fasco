@@ -1,0 +1,18 @@
+---
+import SignupPage from "@/modules/auth/components/Signup";
+import Layout from "@/shared/layouts/Layout.astro";
+import registerImage from "@/assets/images/registerImage.jpg";
+---
+
+<Layout>
+  <div class="flex h-full w-full items-center justify-center">
+    <div class="md:max-w-[50%] hidden md:flex border">
+      <img
+        src={registerImage.src}
+        alt="banner-image"
+        class="h-[480px] w-full object-cover"
+      />
+    </div>
+    <SignupPage client:load />
+  </div>
+</Layout>

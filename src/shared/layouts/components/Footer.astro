@@ -8,8 +8,8 @@ const user = Astro.locals.user;
 const path = Astro.url.pathname;
 
 const isClear =
-  path !== "/login" &&
-  path !== "/register" &&
+  path !== "/auth/signin" &&
+  path !== "/auth/signup" &&
   path !== "/auth/forget-password" &&
   path !== "/auth/confirm-otp" &&
   path !== "/auth/change-password";

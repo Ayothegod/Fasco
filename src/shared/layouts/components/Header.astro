@@ -7,8 +7,8 @@ const path = Astro.url.pathname;
 // console.log(path);
 
 const isClear =
-  path !== "/login" &&
-  path !== "/register" &&
+  path !== "/auth/signin" &&
+  path !== "/auth/signup" &&
   path !== "/auth/forget-password" &&
   path !== "/auth/confirm-otp" &&
   path !== "/auth/change-password";

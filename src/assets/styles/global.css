@@ -119,4 +119,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .pageStyle {
+    @apply max-w-[1440px] mx-auto
+  }
 }

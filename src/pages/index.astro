@@ -7,55 +7,183 @@ import TestPage from "../shared/components/test";
 import {
   default as leftBanner,
   default as rightBanner,
-} from "@/assets/images/";
+} from "@/assets/images/image 227.png";
+import bottomBanner from "@/assets/images/image (1).png";
+import topBanner from "@/assets/images/image.png";
+import pradaLogo from "@/assets/images/logo (1).png";
+import louisVuittonLogo from "@/assets/images/logo (2).png";
+import chanelLogo from "@/assets/images/logo (3).png";
+import calvinKleinLogo from "@/assets/images/logo.png";
+import slider from "@/assets/images/slider.png";
+
+import { Image } from "astro:assets";
+import { Button } from "@/shared/components/ui/button";
+import { followUsImages } from "@/modules/index/services/indexUtils";
+import NewArrivals from "@/modules/index/components/NewArrivals";
+import Deals from "@/modules/index/components/Deals.astro";
+import Testimonial from "@/modules/index/components/Testimonial.astro";
+import Newsletter from "@/modules/index/components/Newsletter.astro";
 ---
 
 <Layout
   title="Fasco | Trendy Fashion for Men & Women"
   description="Discover stylish clothes, shoes, glasses, and accessories for men and women at Fasco. Fashion-forward, quality-first, always in style."
 >
-<div>
-      <section className="pageStyle grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="hidden md:block w-full h-[400px] md:h-[500px] bg-gray-300 rounded-md">
+  <div>
+    <!-- NOTE: top -->
+    <section class="pageStyle grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div
+        class="hidden md:block w-full h-[400px] md:h-[500px] bg-gray-300 rounded-md"
+      >
+        <!-- <img
+          src={leftBanner.src}
+          alt="top-banner-image"
+          class="h-full w-full object-cover object-top"
+        /> -->
+
+        <Image
+          src={leftBanner}
+          alt="top-banner-image"
+          width={leftBanner.width}
+          height={leftBanner.height}
+          class="h-full w-full object-cover object-top"
+        />
+      </div>
+      <div
+        class="w-full min-h-[80vh] md:h-[500px] bg-white rounded-md flex flex-col"
+      >
+        <div class="h-[20%] bg-gray-300 rounded-md">
           <img
-            src={leftBanner}
+            src={topBanner.src}
             alt="top-banner-image"
-            className="h-full w-full object-cover object-top"
+            class="h-full w-full object-cover object-top"
           />
         </div>
-        <div className="w-full min-h-[80vh] md:h-[500px] bg-white rounded-md flex flex-col">
-          <div className="h-[20%] bg-gray-300 rounded-md">
-            <img
-              src={topBanner}
-              alt="top-banner-image"
-              className="h-full w-full object-cover object-top"
-            />
-          </div>
 
-          <div className="h-[60%] p-4 border text-center flex flex-col items-center justify-center gap-4">
-            <h2 className="text-7xl md:text-4xl font-bold">ULTIMATE</h2>
-            <h2 className="text-8xl md:text-7xl font-bold">SALE</h2>
-            <p>NEW COLLECTION</p>
-            <Link to="/shop">
-              <Button>Get started</Button>
-            </Link>
-          </div>
-
-          <div className="h-[20%] bg-pink-300 rounded-md ">
-            <img
-              src={bottomBanner}
-              alt="bottom-banner-image"
-              className="h-full w-full object-cover object-top"
-            />
-          </div>
+        <div
+          class="h-[60%] p-4 border text-center flex flex-col items-center justify-center gap-4"
+        >
+          <h2 class="text-7xl md:text-4xl font-bold">ULTIMATE</h2>
+          <h2 class="text-8xl md:text-7xl font-bold">SALE</h2>
+          <p>NEW COLLECTION</p>
+          <a href="/shop">
+            <Button>Get started</Button>
+          </a>
         </div>
-        <div className="hidden md:block w-full h-[400px] md:h-[500px] bg-gray-300 rounded-md">
+
+        <div class="h-[20%] bg-pink-300 rounded-md">
           <img
-            src={rightBanner}
-            alt="top-banner-image"
-            className="h-full w-full object-cover object-top"
+            src={bottomBanner.src}
+            alt="bottom-banner-image"
+            class="h-full w-full object-cover object-top"
           />
         </div>
-      </section>
-</div>
+      </div>
+      <div
+        class="hidden md:block w-full h-[400px] md:h-[500px] bg-gray-300 rounded-md"
+      >
+        <img
+          src={rightBanner.src}
+          alt="top-banner-image"
+          class="h-full w-full object-cover object-top"
+        />
+      </div>
+    </section>
+
+    <!-- NOTE: brand -->
+    <section class="pageStyle mt-16 mb-16">
+      <h2
+        class="text-2xl sm:text-3xl md:text-2xl font-serif font-bold tracking-wide text-center"
+      >
+        Sponsors
+      </h2>
+      <div
+        class="grid grid-cols-2 sm:grid-cols-3 gap-8 md:flex md:flex-wrap md:items-center md:justify-between mt-6"
+      >
+        <img src={chanelLogo.src} alt="top-banner-image" class="w-24 md:w-36" />
+        <img
+          src={louisVuittonLogo.src}
+          alt="top-banner-image"
+          class="w-24 md:w-36"
+        />
+        <img src={pradaLogo.src} alt="top-banner-image" class="w-24 md:w-36" />
+        <img
+          src={calvinKleinLogo.src}
+          alt="top-banner-image"
+          class="w-24 md:w-36"
+        />
+      </div>
+    </section>
+
+    <!-- NOTE: deals -->
+    <Deals />
+
+    <!-- NOTE: New arrivals -->
+    <main class="pageStyle mt-8 mb-16 overflow-x-hidden">
+      <div class="text-center">
+        <h2
+          class="text-2xl sm:text-3xl md:text-2xl font-serif font-bold tracking-wide"
+        >
+          New Arrivals
+        </h2>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
+          delectus vel dolor in ex nobis sint itaque vitae, minus saepe?
+        </p>
+      </div>
+      <NewArrivals />
+
+      <div class="mt-8 flex items-center justify-center">
+        <a href="/shop">
+          <Button className="w-full sm:w-fit sm:px-8">View More</Button>
+        </a>
+      </div>
+    </main>
+
+    <!-- NOTE: slider -->
+    <section class="hidden md:block mt-16 mb-16">
+      <img src={slider.src} alt="top-banner-image" />
+    </section>
+
+    <!-- NOTE: Follow us  -->
+    <section class="mt-8 mb-16">
+      <div class="text-center">
+        <h2
+          class="text-2xl sm:text-3xl md:text-2xl font-serif font-bold tracking-wide"
+        >
+          Follow Us On Instagram
+        </h2>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
+          delectus vel dolor in ex nobis sint itaque vitae, minus saepe?
+        </p>
+      </div>
+
+      <div class="flex overflow-x-hidden items-center mt-10">
+        {
+          followUsImages.map((image, index) => (
+            <div
+              class={`shrink-0 w-full lg:w-1/7 md:w-1/5 sm:w-1/2 ${
+                index % 2 === 0 ? "normal" : ""
+              }`}
+            >
+              <img
+                src={image.src.src}
+                alt={`img-${index}`}
+                class={`w-full transition-transform duration-300 object-cover object-top ${
+                  index % 2 === 1 ? "h-60" : "h-48"
+                }`}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- NOTE: testimonial -->
+     <Testimonial/>
+
+    <!-- NOTE: newsletter -->
+     <Newsletter/>
+  </div>
 </Layout>

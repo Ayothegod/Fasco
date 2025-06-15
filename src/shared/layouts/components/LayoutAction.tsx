@@ -15,7 +15,7 @@ import { Search, ShoppingBag, Star, User } from "lucide-react";
 import React from "react";
 
 export default function LayoutAction({ user }: any) {
-  console.log(user);
+  // console.log(user);
   const cart: any[] = [];
 
   return (

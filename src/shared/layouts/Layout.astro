@@ -1,12 +1,15 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import "../../assets/styles/global.css";
+import Header from "./components/Header.astro";
 
 const { title, description } = Astro.props;
 
-const user = Astro.locals.user;
-const session = Astro.locals.session;
-console.log({ user, session });
+// const user = Astro.locals.user;
+// const session = Astro.locals.session;
+
+// console.log({ user, session });
+
 ---
 
 <!doctype html>
@@ -22,6 +25,7 @@ console.log({ user, session });
     <ClientRouter />
   </head>
   <body>
+    <Header/>
 		<!-- <Header/> -->
     <slot />
 		<!-- <Footer/> -->

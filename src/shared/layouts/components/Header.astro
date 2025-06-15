@@ -1,0 +1,53 @@
+---
+import { navigate } from "astro:transitions/client";
+const user = Astro.locals.user;
+// console.log(user);
+
+const path = Astro.url.pathname;
+// console.log(path);
+
+const isClear =
+  path !== "/login" &&
+  path !== "/register" &&
+  path !== "/auth/forget-password" &&
+  path !== "/auth/confirm-otp" &&
+  path !== "/auth/change-password";
+
+// const { id } = Astro.params;
+import { navLink, noUserNavLink } from "../services/utils";
+import LayoutAction from "../components/LayoutAction"
+---
+
+<header class="pageStyle flex items-center justify-between py-6">
+  <a href={`${user !== null ? "/" : "/login"}`}>
+    <h1
+      class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold tracking-wide"
+    >
+      FASCO
+    </h1>
+  </a>
+
+  {
+    isClear && (
+      <ul class="hidden md:flex items-center gap-8">
+        {user ? (
+          navLink.map((link, idx) => (
+            <p class="text-sm md:text-base">
+              {user && <a href={link.href}>{link.name}</a>}
+            </p>
+          ))
+        ) : (
+          <div class="contents">
+            {noUserNavLink.map((data, idx) => (
+              <p class="text-sm md:text-base">
+                <a href={data.href}>{data.name}</a>
+              </p>
+            ))}
+          </div>
+        )}
+      </ul>
+
+      <LayoutAction user={user}/>
+    )
+  }
+</header>

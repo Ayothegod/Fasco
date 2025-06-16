@@ -31,3 +31,5 @@ prisma/dev.db
 prisma/migrations
 
 todo.md
+fashion_products.json
+fasco_products.json

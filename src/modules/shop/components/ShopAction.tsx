@@ -138,43 +138,23 @@ export default function ShopAction() {
         </aside>
 
         <main className="px-2 w-full">
-          <div className="flex items-center justify-between">
-            <form>
-              <input type="hidden" name="selectedValue" />
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Collections" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Clothing type</SelectLabel>
-                    <SelectItem value="allClothing">All Clothing</SelectItem>
-                    <SelectItem value="bestSelling">Best Selling</SelectItem>
-                    <SelectItem value="newArrivals">New Arrivals</SelectItem>
-                    <SelectItem value="accessories">Accessories</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </form>
-
-            <div className="flex items-center gap-2">
-              {/* <LayoutGrid className={clsx("border h-8 w-8 p-1 rounded-md", {})} /> */}
-              <LayoutGrid
-                onClick={() => setDefaultLayout("grid")}
-                className={`border h-8 w-8 p-1 rounded-md cursor-pointer ${
-                  defaultLayout == "grid" &&
-                  " cursor-not-allowed text-neutral-300"
-                }`}
-              />
-              <Menu
-                onClick={updateDefaultLayout}
-                className={`border h-8 w-8 p-1 rounded-md cursor-pointer ${
-                  defaultLayout == "flat" &&
-                  " cursor-not-allowed text-neutral-300"
-                }`}
-              />
-            </div>
-          </div>
+          <form>
+            <input type="hidden" name="selectedValue" />
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Collections" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Clothing type</SelectLabel>
+                  <SelectItem value="allClothing">All Clothing</SelectItem>
+                  <SelectItem value="bestSelling">Best Selling</SelectItem>
+                  <SelectItem value="newArrivals">New Arrivals</SelectItem>
+                  <SelectItem value="accessories">Accessories</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </form>
 
           <div className="mt-4">
             {isLoading ? (

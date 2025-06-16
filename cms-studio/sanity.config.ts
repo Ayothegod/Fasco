@@ -1,9 +1,15 @@
-import { defineConfig } from 'sanity'
+import {defineConfig, isDev} from 'sanity'
 
-import { schemaTypes } from './schemaTypes'
+import {structureTool} from 'sanity/structure'
+import {schemaTypes} from './schemaTypes'
+// import {structure} from './structure'
 
-import { visionTool } from '@sanity/vision'
-import { mediaAssetSource } from 'sanity-plugin-media'
+import {visionTool} from '@sanity/vision'
+import {colorInput} from '@sanity/color-input'
+import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
+import {media, mediaAssetSource} from 'sanity-plugin-media'
+// import {customDocumentActions} from './plugins/customDocumentActions'
+import Navbar from './components/studio/Navbar'
 
 const devOnlyPlugins = [visionTool()]
 
@@ -13,6 +19,15 @@ export default defineConfig({
 
   projectId: 'zxhn84dx',
   dataset: 'production',
+
+  plugins: [
+    // structureTool({structure}),
+    colorInput(),
+    imageHotspotArrayPlugin(),
+    // customDocumentActions(),
+    media(),
+    ...(isDev ? devOnlyPlugins : []),
+  ],
 
   schema: {
     types: schemaTypes,
@@ -31,9 +46,9 @@ export default defineConfig({
     },
   },
 
-  // studio: {
-  //   components: {
-  //     navbar: Navbar,
-  //   },
-  // },
+  studio: {
+    components: {
+      navbar: Navbar,
+    },
+  },
 })

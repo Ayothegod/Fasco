@@ -25,7 +25,14 @@ import {
 } from "@/shared/components/ui/select";
 import { query } from "../services/useSearchParams";
 import { Input } from "@/shared/components/ui/input";
-// import { stateStore } from "~/lib/store";
+import {
+  colors,
+  priceRange,
+  sizes,
+  genders,
+  subCategories,
+  tags,
+} from "../services/constants";
 
 const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
@@ -51,21 +58,24 @@ export default function ShopAction() {
 
   const collection = query.get("collection") ?? "";
 
-  // const name = query.get("name");
-  // const [value, setValue] = useState(name ? name : "");
-
   const size = query.get("size") ?? "";
-  const sizes = ["S", "M", "L", "XL"];
   const [selectedSize, setSelectedSize] = useState<string | null>(size);
 
   const price = query.get("price") ?? "";
   const [selectedPrice, setSelectedPrice] = useState<string | null>(price);
-  const priceRange = [
-    { price: "0-49", value: "$0 - $49" },
-    { price: "50-99", value: "$50 - $99" },
-    { price: "100-199", value: "$100 - $199" },
-    { price: "200+", value: "$200 - $*" },
-  ];
+
+  const color = query.get("color") ?? "";
+  const [selectedColor, setSelectedColor] = useState<string | null>(color);
+
+  const gender = query.get("gender") ?? "";
+  const [selectedGender, setSelectedGender] = useState<string | null>(gender);
+
+  const category = query.get("category") ?? "";
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    category
+  );
+
+  // console.log(selectedColor, selectedPrice, selectedSize);
 
   return (
     <main className="min-h-[60vh]">
@@ -88,11 +98,63 @@ export default function ShopAction() {
 
       <section className="pageStyle mt-8 flex gap-x-4">
         <aside className="hidden md:block w-[30%] lg:w-[25%]">
-          <h3 className="text-2xl font-serif font-bold tracking-wide">
+          {/* <h3 className="text-2xl font-serif font-bold tracking-wide">
             Filters
-          </h3>
+          </h3> */}
           {/* NOTE: <Filters /> */}
-          <section className="space-y-6 mt-8">
+          <section className="space-y-6">
+            <div className="space-y-2">
+              <h4 className="text-lg font-serif font-bold tracking-wide">
+                Gender
+              </h4>
+
+              <div className="flex items-center gap-4">
+                {genders.map((g, i) => (
+                  <button
+                    key={i}
+                    className={`font-light border py-1 px-2 rounded hover:font-medium 
+                      ${
+                        selectedGender === g
+                          ? "border-blue-500 font-medium text-blue-500 border hover:border-blue-300"
+                          : "border-gray-300"
+                      }`}
+                    onClick={() => {
+                      setSelectedGender(g);
+                      query.set("gender", g);
+                    }}
+                  >
+                    {g}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text-lg font-serif font-bold tracking-wide">
+                Category
+              </h4>
+
+              <div className="flex items-start flex-col gap-1">
+                {subCategories.map((category, i) => (
+                  <p
+                    key={i}
+                    className={`font-light py-2 px-4 hover:font-medium cursor-pointer
+                      ${
+                        selectedCategory === category
+                          ? "font-medium text-blue-500"
+                          : ""
+                      }`}
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      query.set("category", category);
+                    }}
+                  >
+                    {category}
+                  </p>
+                ))}
+              </div>
+            </div>
+
             <div className="space-y-2">
               <h4 className="text-lg font-serif font-bold tracking-wide">
                 Size
@@ -102,7 +164,7 @@ export default function ShopAction() {
                 {sizes.map((s, i) => (
                   <button
                     key={i}
-                    className={`font-light border py-2 px-4 rounded hover:font-medium 
+                    className={`font-light border py-1 px-4 rounded hover:font-medium 
                       ${
                         selectedSize === s
                           ? "border-blue-500 font-medium text-blue-500 hover:border-blue-300"
@@ -121,17 +183,12 @@ export default function ShopAction() {
 
             <div className="space-y-2">
               <h4 className="text-lg font-serif font-bold tracking-wide">
-                Colors
-              </h4>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text font-serif font-bold tracking-wide">
                 Prices
               </h4>
               <div className="flex flex-col gap-2">
                 {priceRange.map((price) => (
                   <button
+                    key={price.price}
                     className={`font-light py-2 px-4 rounded hover:font-medium text-left cursor-pointer 
                       ${
                         selectedPrice === price.price
@@ -147,9 +204,32 @@ export default function ShopAction() {
                   </button>
                 ))}
               </div>
+
+              <div className="space-y-2">
+                <h4 className="text-lg font-serif font-bold tracking-wide">
+                  Colors
+                </h4>
+                <div className="flex items-start flex-nowrap gap-1">
+                  {colors.map((color, i) => (
+                    <p
+                      key={i}
+                      style={{ backgroundColor: color }}
+                      className={`h-6 w-6 rounded-full cursor-pointer
+                      ${selectedColor === color ? "" : ""}
+                      `}
+                      onClick={() => {
+                        setSelectedCategory(color);
+                        query.set("color", color);
+                      }}
+                    >
+                      {/* {color} */}
+                    </p>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <h4 className="text-lg font-serif font-bold tracking-wide">
                 Tags
               </h4>
@@ -161,7 +241,7 @@ export default function ShopAction() {
                 <span className="font-light">Sunglasses</span>
                 <span className="font-light">Beachwear</span>
               </div>
-            </div>
+            </div> */}
           </section>
         </aside>
 

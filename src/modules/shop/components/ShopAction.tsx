@@ -50,15 +50,22 @@ export default function ShopAction() {
   }, []);
 
   const collection = query.get("collection") ?? "";
-  const size = query.get("size") ?? "";
-
-  // const [newSize, setNewSize] = useState(size ?? "");
 
   // const name = query.get("name");
   // const [value, setValue] = useState(name ? name : "");
 
+  const size = query.get("size") ?? "";
   const sizes = ["S", "M", "L", "XL"];
   const [selectedSize, setSelectedSize] = useState<string | null>(size);
+
+  const price = query.get("price") ?? "";
+  const [selectedPrice, setSelectedPrice] = useState<string | null>(price);
+  const priceRange = [
+    { price: "0-49", value: "$0 - $49" },
+    { price: "50-99", value: "$50 - $99" },
+    { price: "100-199", value: "$100 - $199" },
+    { price: "200+", value: "$200 - $*" },
+  ];
 
   return (
     <main className="min-h-[60vh]">
@@ -96,8 +103,6 @@ export default function ShopAction() {
                   <button
                     key={i}
                     className={`font-light border py-2 px-4 rounded hover:font-medium 
-                      
-                      
                       ${
                         selectedSize === s
                           ? "border-blue-500 font-medium text-blue-500 hover:border-blue-300"
@@ -124,23 +129,23 @@ export default function ShopAction() {
               <h4 className="text font-serif font-bold tracking-wide">
                 Prices
               </h4>
-              <div className="space-y-2">
-                <p className="font-light">$0 - $49</p>
-                <p className="font-light">$50 - $99</p>
-                <p className="font-light">$100 - $199</p>
-                <p className="font-light">$200 - $*</p>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-lg font-serif font-bold tracking-wide">
-                Collections
-              </h4>
-              <div className="space-y-2">
-                <p className="font-light">All products</p>
-                <p className="font-light">Best sellers</p>
-                <p className="font-light">New arrivals</p>
-                <p className="font-light">Accessories</p>
+              <div className="flex flex-col gap-2">
+                {priceRange.map((price) => (
+                  <button
+                    className={`font-light py-2 px-4 rounded hover:font-medium text-left cursor-pointer 
+                      ${
+                        selectedPrice === price.price
+                          ? "border-blue-500 font-medium text-blue-500 hover:border-blue-300"
+                          : "border-gray-300"
+                      }`}
+                    onClick={() => {
+                      setSelectedPrice(price.price);
+                      query.set("price", price.price);
+                    }}
+                  >
+                    {price.value}
+                  </button>
+                ))}
               </div>
             </div>
 

@@ -5,7 +5,7 @@ import image4 from "@/assets/images/image (7).png";
 import image5 from "@/assets/images/image (8).png";
 import image6 from "@/assets/images/image (9).png";
 import image7 from "@/assets/images/image (10).png";
-import { Contact, Search, ShoppingBag, Star } from "lucide-react";
+// import { Contact, Search, ShoppingBag, Star } from "lucide-react";
 
 export const followUsImages = [
   { src: image1, alt: "first-image" },

@@ -1,9 +1,8 @@
-import { Brain } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
 import { Separator } from "@/shared/components/ui/separator";
 import { authClient } from "@/shared/lib/auth-client";
 import { navigate } from "astro:transitions/client";
-import { Input } from "@/shared/components/ui/input";
 // const {
 //   data: session,
 //   // isPending, //loading state

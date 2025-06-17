@@ -12,7 +12,6 @@ import {
   SheetTrigger,
 } from "@/shared/components/ui/sheet";
 import { Search, ShoppingBag, Star, User } from "lucide-react";
-import React from "react";
 
 export default function LayoutAction({ user }: any) {
   // console.log(user);

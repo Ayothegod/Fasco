@@ -1,4 +1,4 @@
-import { LayoutGrid, Menu } from "lucide-react";
+// import { LayoutGrid, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import slider from "@/assets/images/slider.png";

@@ -49,10 +49,16 @@ export default function ShopAction() {
     }
   }, []);
 
-  const collection = query.get("collection") ?? ""
+  const collection = query.get("collection") ?? "";
+  const size = query.get("size") ?? "";
+
+  // const [newSize, setNewSize] = useState(size ?? "");
+
   // const name = query.get("name");
   // const [value, setValue] = useState(name ? name : "");
 
+  const sizes = ["S", "M", "L", "XL"];
+  const [selectedSize, setSelectedSize] = useState<string | null>(size);
 
   return (
     <main className="min-h-[60vh]">
@@ -86,12 +92,25 @@ export default function ShopAction() {
               </h4>
 
               <div className="flex items-center gap-4">
-                <Button variant="outline" size="sm" className="font-light">
-                  S
-                </Button>
-                <Button variant="outline" size="sm" className="font-light">
-                  M
-                </Button>
+                {sizes.map((s, i) => (
+                  <button
+                    key={i}
+                    className={`font-light border py-2 px-4 rounded hover:font-medium 
+                      
+                      
+                      ${
+                        selectedSize === s
+                          ? "border-blue-500 font-medium text-blue-500 hover:border-blue-300"
+                          : "border-gray-300"
+                      }`}
+                    onClick={() => {
+                      setSelectedSize(s);
+                      query.set("size", s);
+                    }}
+                  >
+                    {s}
+                  </button>
+                ))}
               </div>
             </div>
 

@@ -5,7 +5,8 @@ import react from "@astrojs/react";
 
 import tailwindcss from "@tailwindcss/vite";
 
-import node from "@astrojs/node";
+// import node from "@astrojs/node";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,9 +16,11 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  adapter: node({
-    mode: "standalone",
-  }),
+  // adapter: node({
+  //   mode: "standalone",
+  // }),
 
-  output: "server"
+  adapter: vercel({}),
+
+  output: "server",
 });

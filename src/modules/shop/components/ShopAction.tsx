@@ -23,12 +23,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/ui/select";
+import { query } from "../services/useSearchParams";
+import { Input } from "@/shared/components/ui/input";
 // import { stateStore } from "~/lib/store";
 
 const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
 export default function ShopAction() {
-  // const { user } = stateStore();
   const { data, error, isLoading } = useSWR(
     "https://dummyjson.com/products/category/womens-dresses",
     fetcher
@@ -41,14 +42,17 @@ export default function ShopAction() {
     }
   }, [data]);
 
-  const [defaultLayout, setDefaultLayout] = useState("grid");
-  const updateDefaultLayout = () => {
-    if (defaultLayout === "grid") {
-      setDefaultLayout("flat");
-    } else {
-      setDefaultLayout("grid");
+  useEffect(() => {
+    const collection = query.get("collection");
+    if (!collection) {
+      query.set("collection", "allClothing");
     }
-  };
+  }, []);
+
+  const collection = query.get("collection") ?? ""
+  // const name = query.get("name");
+  // const [value, setValue] = useState(name ? name : "");
+
 
   return (
     <main className="min-h-[60vh]">
@@ -71,92 +75,93 @@ export default function ShopAction() {
 
       <section className="pageStyle mt-8 flex gap-x-4">
         <aside className="hidden md:block w-[30%] lg:w-[25%]">
-          <h3 className="text-xl font-serif font-bold tracking-wide">
+          <h3 className="text-2xl font-serif font-bold tracking-wide">
             Filters
           </h3>
           {/* NOTE: <Filters /> */}
           <section className="space-y-6 mt-8">
             <div className="space-y-2">
-              <h4 className="text-xs font-serif font-bold tracking-wide">
+              <h4 className="text-lg font-serif font-bold tracking-wide">
                 Size
               </h4>
 
-              <div className="flex items-center justify-between">
-                <Button variant="outline" size="sm">
+              <div className="flex items-center gap-4">
+                <Button variant="outline" size="sm" className="font-light">
                   S
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="font-light">
                   M
-                </Button>
-                <Button variant="outline" size="sm">
-                  L
-                </Button>
-                <Button variant="outline" size="sm">
-                  XL
                 </Button>
               </div>
             </div>
 
             <div className="space-y-2">
-              <h4 className="text-xs font-serif font-bold tracking-wide">
+              <h4 className="text-lg font-serif font-bold tracking-wide">
+                Colors
+              </h4>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text font-serif font-bold tracking-wide">
                 Prices
               </h4>
               <div className="space-y-2">
-                <p className="text-sm text-medium">$0 - $49</p>
-                <p className="text-sm text-medium">$50 - $99</p>
-                <p className="text-sm text-medium">$100 - $199</p>
-                <p className="text-sm text-medium">$200 - $*</p>
+                <p className="font-light">$0 - $49</p>
+                <p className="font-light">$50 - $99</p>
+                <p className="font-light">$100 - $199</p>
+                <p className="font-light">$200 - $*</p>
               </div>
             </div>
 
             <div className="space-y-2">
-              <h4 className="text-xs font-serif font-bold tracking-wide">
+              <h4 className="text-lg font-serif font-bold tracking-wide">
                 Collections
               </h4>
               <div className="space-y-2">
-                <p className="text-sm text-medium">All products</p>
-                <p className="text-sm text-medium">Best sellers</p>
-                <p className="text-sm text-medium">New arrivals</p>
-                <p className="text-sm text-medium">Accessories</p>
+                <p className="font-light">All products</p>
+                <p className="font-light">Best sellers</p>
+                <p className="font-light">New arrivals</p>
+                <p className="font-light">Accessories</p>
               </div>
             </div>
 
             <div className="space-y-2">
-              <h4 className="text-xs font-serif font-bold tracking-wide">
+              <h4 className="text-lg font-serif font-bold tracking-wide">
                 Tags
               </h4>
               <div className="flex gap-2 flex-wrap">
-                <span className="text-sm text-medium">Fashion</span>
-                <span className="text-sm text-medium">Belt</span>
-                <span className="text-sm text-medium">Sandals</span>
-                <span className="text-sm text-medium">Bags</span>
-                <span className="text-sm text-medium">Sunglasses</span>
-                <span className="text-sm text-medium">Beachwear</span>
+                <span className="font-light">Fashion</span>
+                <span className="font-light">Belt</span>
+                <span className="font-light">Sandals</span>
+                <span className="font-light">Bags</span>
+                <span className="font-light">Sunglasses</span>
+                <span className="font-light">Beachwear</span>
               </div>
             </div>
           </section>
         </aside>
 
         <main className="px-2 w-full">
-          <form>
-            <input type="hidden" name="selectedValue" />
-            <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Collections" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Clothing type</SelectLabel>
-                  <SelectItem value="allClothing">All Clothing</SelectItem>
-                  <SelectItem value="bestSelling">Best Selling</SelectItem>
-                  <SelectItem value="newArrivals">New Arrivals</SelectItem>
-                  <SelectItem value="accessories">Accessories</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </form>
+          <Select
+            onValueChange={(value) => {
+              query.set("collection", value);
+            }}
+            defaultValue={collection}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Collections" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="allClothing">All Clothing</SelectItem>
+                <SelectItem value="bestSelling">Best Selling</SelectItem>
+                <SelectItem value="newArrivals">New Arrivals</SelectItem>
+                <SelectItem value="accessories">Accessories</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
 
-          <div className="mt-4">
+          {/* <div className="mt-4">
             {isLoading ? (
               <div>
                 <Skeleton className="h-[125px] w-[250px] rounded-xl" />
@@ -181,12 +186,19 @@ export default function ShopAction() {
                               product.thumbnail || "https://placehold.co/400"
                             }
                             alt={`image-${product.title}`}
-                            className=" w-full max-h-4/5 h-full object-cover border"
+                            className=" w-full max-h-4/5 h-full object-cover border border-neutral-100"
                           />
-                          <div className="h-1/5 w-full flex items-center justify-between px-2">
+                          <div className="h-1/5 w-full flex gap-4 items-center justify-between px-2">
                             <div className="flex flex-col">
-                              <p className="font-medium">{product.title}</p>
-                              <p>${product.price}</p>
+                              <p className="font-medium text-lg">
+                                {product.title}
+                              </p>
+                              <p className="font-light">
+                                ${" "}
+                                <span className="font-medium">
+                                  {product.price}
+                                </span>
+                              </p>
                             </div>
                             <p className="h-7 w-7 rounded-full bg-red-400"></p>
                           </div>
@@ -199,7 +211,7 @@ export default function ShopAction() {
                 )}
               </div>
             )}
-          </div>
+          </div> */}
         </main>
       </section>
 

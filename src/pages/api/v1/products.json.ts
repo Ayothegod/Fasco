@@ -11,6 +11,7 @@ export async function GET({}) {
     // console.log(posts);
 
     return Response.json({ posts });
+    // {message, data}
   } catch (error) {
     return Response.json({ error: "Unable to fetch ssanity data" });
   }

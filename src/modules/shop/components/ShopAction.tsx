@@ -29,9 +29,25 @@ import {
 import { query } from "../services/useSearchParams";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import { db } from "@/shared/lib/seed";
+import { client } from "@/core/config/sanityClient";
 
 export default function ShopAction() {
   const isLoading = true;
+
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    client
+      .fetch(`*[]`)
+      .then((data) => {
+        console.log(data);
+
+        setPosts(data);
+      })
+      .catch(console.error);
+  }, []);
+
+  console.log({ posts });
 
   // let limit = 12;
   // let page = 1

@@ -34,20 +34,16 @@ import { client } from "@/core/config/sanityClient";
 export default function ShopAction() {
   const isLoading = true;
 
-  const [posts, setPosts] = useState([]);
+  // useEffect(() => {
+  //   client
+  //     .fetch(`*[]`)
+  //     .then((data) => {
+  //       console.log(data);
 
-  useEffect(() => {
-    client
-      .fetch(`*[]`)
-      .then((data) => {
-        console.log(data);
-
-        setPosts(data);
-      })
-      .catch(console.error);
-  }, []);
-
-  console.log({ posts });
+  //       setPosts(data);
+  //     })
+  //     .catch(console.error);
+  // }, []);
 
   // let limit = 12;
   // let page = 1

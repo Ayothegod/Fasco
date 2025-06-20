@@ -121,6 +121,6 @@
   }
 
   .pageStyle {
-    @apply max-w-[1440px] mx-auto
+    @apply max-w-[1440px] mx-auto px-4;
   }
 }

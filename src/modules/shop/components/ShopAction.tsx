@@ -1,7 +1,7 @@
 // import { LayoutGrid, Menu } from "lucide-react";
+import slider from "@/assets/images/slider.png";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import slider from "@/assets/images/slider.png";
 // import FollowUs from "~/components/build/FollowUs";
 // import Newsletter from "~/components/build/Newsletter";
 import {
@@ -12,42 +12,34 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/shared/components/ui/breadcrumb";
-import { Skeleton } from "@/shared/components/ui/skeleton";
-import { Button } from "@/shared/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/ui/select";
-import { query } from "../services/useSearchParams";
-import { Input } from "@/shared/components/ui/input";
 import {
-  colors,
+  genders,
   priceRange,
   sizes,
-  genders,
   subCategories,
-  tags,
 } from "../services/constants";
-
-const fetcher = (url: any) => fetch(url).then((res) => res.json());
+import { query } from "../services/useSearchParams";
+import { Skeleton } from "@/shared/components/ui/skeleton";
+import { db } from "@/shared/lib/seed";
 
 export default function ShopAction() {
-  const { data, error, isLoading } = useSWR(
-    "https://dummyjson.com/products/category/womens-dresses",
-    fetcher
-  );
+  const isLoading = true;
 
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    if (data) {
-      setProducts(data.products);
-    }
-  }, [data]);
+  // let limit = 12;
+  // let page = 1
+
+  //   const page = Number(searchParams.get("page") || 1);
+  //   const limit = Number(searchParams.get("limit") || 12);
+  // const start = (page - 1) * limit
+  // const end = start + limit
 
   useEffect(() => {
     const collection = query.get("collection");
@@ -64,9 +56,6 @@ export default function ShopAction() {
   const price = query.get("price") ?? "";
   const [selectedPrice, setSelectedPrice] = useState<string | null>(price);
 
-  const color = query.get("color") ?? "";
-  const [selectedColor, setSelectedColor] = useState<string | null>(color);
-
   const gender = query.get("gender") ?? "";
   const [selectedGender, setSelectedGender] = useState<string | null>(gender);
 
@@ -74,8 +63,6 @@ export default function ShopAction() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     category
   );
-
-  // console.log(selectedColor, selectedPrice, selectedSize);
 
   return (
     <main className="min-h-[60vh]">
@@ -205,54 +192,40 @@ export default function ShopAction() {
                 ))}
               </div>
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <h4 className="text-lg font-serif font-bold tracking-wide">
                   Colors
                 </h4>
-                <div className="flex items-start flex-nowrap gap-1">
+                <div className="flex items-start flex-wrap gap-1">
                   {colors.map((color, i) => (
                     <p
                       key={i}
                       style={{ backgroundColor: color }}
-                      className={`h-6 w-6 rounded-full cursor-pointer
-                      ${selectedColor === color ? "" : ""}
+                      className={`h-6 w-6 rounded-full cursor-pointer border
+                      ${selectedColor === color ? "border border-blue-500" : ""}
                       `}
                       onClick={() => {
+                        console.log(color);
                         setSelectedCategory(color);
                         query.set("color", color);
                       }}
-                    >
-                      {/* {color} */}
-                    </p>
+                    ></p>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
-
-            {/* <div className="space-y-2">
-              <h4 className="text-lg font-serif font-bold tracking-wide">
-                Tags
-              </h4>
-              <div className="flex gap-2 flex-wrap">
-                <span className="font-light">Fashion</span>
-                <span className="font-light">Belt</span>
-                <span className="font-light">Sandals</span>
-                <span className="font-light">Bags</span>
-                <span className="font-light">Sunglasses</span>
-                <span className="font-light">Beachwear</span>
-              </div>
-            </div> */}
           </section>
         </aside>
 
-        <main className="px-2 w-full">
+        <main className="w-full">
+          <div></div>
           <Select
             onValueChange={(value) => {
               query.set("collection", value);
             }}
             defaultValue={collection}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] ml-auto">
               <SelectValue placeholder="Collections" />
             </SelectTrigger>
             <SelectContent>
@@ -265,57 +238,59 @@ export default function ShopAction() {
             </SelectContent>
           </Select>
 
-          {/* <div className="mt-4">
+          <div className="mt-4">
             {isLoading ? (
-              <div>
-                <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-[250px]" />
-                  <Skeleton className="h-4 w-[200px]" />
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                {[1, 2, 3, 4, 5, 6].map((skeleton, i) => (
+                  <div className="h-[520px]" key={i}>
+                    <div className="h-full flex flex-col gap-2">
+                      <Skeleton className="w-full max-h-4/5 h-full object-cover border border-neutral-100" />
+                      <div className="h-1/5 w-full flex gap-4 items-center justify-between px-2">
+                        <div className="flex flex-col gap-2">
+                          <Skeleton className="h-8 w-full" />
+                          <Skeleton className="h-5 w-[200px]" />
+                        </div>
+                        <Skeleton className="h-7 w-7 rounded-full bg-red-100" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : (
               <div>
-                {defaultLayout === "grid" ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                    {products.map((product: any, index) => (
-                      <a
-                        href={`/products/${product.id}`}
-                        key={product.id}
-                        className="h-[520px] "
-                      >
-                        <div className="h-full flex flex-col gap-2">
-                          <img
-                            src={
-                              product.thumbnail || "https://placehold.co/400"
-                            }
-                            alt={`image-${product.title}`}
-                            className=" w-full max-h-4/5 h-full object-cover border border-neutral-100"
-                          />
-                          <div className="h-1/5 w-full flex gap-4 items-center justify-between px-2">
-                            <div className="flex flex-col">
-                              <p className="font-medium text-lg">
-                                {product.title}
-                              </p>
-                              <p className="font-light">
-                                ${" "}
-                                <span className="font-medium">
-                                  {product.price}
-                                </span>
-                              </p>
-                            </div>
-                            <p className="h-7 w-7 rounded-full bg-red-400"></p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                  {db.slice(9).map((product, index) => (
+                    <a
+                      href={`/products/${product.id}`}
+                      key={product.id}
+                      className="h-[520px] "
+                    >
+                      <div className="h-full flex flex-col gap-2">
+                        <img
+                          src={product.imageUrl || "https://placehold.co/400"}
+                          alt={`image-${product.productName}`}
+                          className=" w-full max-h-4/5 h-full object-cover border border-neutral-100"
+                        />
+                        <div className="h-1/5 w-full flex gap-4 items-center justify-between px-2">
+                          <div className="flex flex-col">
+                            <p className="font-medium text-lg">
+                              {product.productName}
+                            </p>
+                            <p className="font-light">
+                              <span className="font-medium">
+                                {product.price}
+                              </span>
+                            </p>
                           </div>
+                          <p className="h-7 w-7 rounded-full bg-red-400"></p>
                         </div>
-                      </a>
-                    ))}
-                  </div>
-                ) : (
-                  "Hello"
-                )}
+                      </div>
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
-          </div> */}
+          </div>
         </main>
       </section>
 

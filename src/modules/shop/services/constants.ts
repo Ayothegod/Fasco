@@ -9,7 +9,19 @@ export const sizes = ["S", "M", "L", "XL"];
 
 export const genders = ["male", "female", "unisex"];
 
-export const colors = [
+const tailwindColorMap: Record<string, string> = {
+  black: "bg-black",
+  blue: "bg-blue-500",
+  green: "bg-green-500",
+  red: "bg-red-500",
+  yellow: "bg-yellow-400",
+  // ...
+};
+
+// Usage: casual - sports - ethnic
+// Season: fall - summer - winter
+
+const colors = [
   "beige",
   "black",
   "blue",
@@ -51,7 +63,7 @@ export const subCategories = [
   "personal care",
 ];
 
-export const tags = [
+const tags = [
   "backpacks",
   "bath robe",
   "belts",

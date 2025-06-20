@@ -1,6 +1,3 @@
-// "discount": 20 -> discount code, newArrival(createdAt date), bestSeller(no of people that order completed)
-// update and reduce the stock based on the no of order on this product completed
-
 export const db = [
   {
     id: 15970,

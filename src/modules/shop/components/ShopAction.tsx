@@ -48,6 +48,14 @@ export default function ShopAction() {
     }
   }, []);
 
+  // NOTE:
+  //   useEffect(() => {
+  //   const gender = query.get("gender");
+  //   if (gender) setSelectedGender(gender);
+  // }, []);
+  // You're reading query params after a navigation event or dynamic update.
+  // Or you're using React Router / SPA-style routing where the page doesn't reload.
+
   const collection = query.get("collection") ?? "";
 
   const size = query.get("size") ?? "";
@@ -85,9 +93,6 @@ export default function ShopAction() {
 
       <section className="pageStyle mt-8 flex gap-x-4">
         <aside className="hidden md:block w-[30%] lg:w-[25%]">
-          {/* <h3 className="text-2xl font-serif font-bold tracking-wide">
-            Filters
-          </h3> */}
           {/* NOTE: <Filters /> */}
           <section className="space-y-6">
             <div className="space-y-2">
@@ -99,15 +104,20 @@ export default function ShopAction() {
                 {genders.map((g, i) => (
                   <button
                     key={i}
-                    className={`font-light border py-1 px-2 rounded hover:font-medium 
+                    className={`font-light border py-1 px-2 rounded hover:font-medium cursor-pointer
                       ${
                         selectedGender === g
                           ? "border-blue-500 font-medium text-blue-500 border hover:border-blue-300"
                           : "border-gray-300"
                       }`}
                     onClick={() => {
-                      setSelectedGender(g);
-                      query.set("gender", g);
+                      if (selectedGender === g) {
+                        setSelectedGender(null);
+                        query.delete("gender");
+                      } else {
+                        setSelectedGender(g);
+                        query.set("gender", g);
+                      }
                     }}
                   >
                     {g}
@@ -132,8 +142,13 @@ export default function ShopAction() {
                           : ""
                       }`}
                     onClick={() => {
-                      setSelectedCategory(category);
-                      query.set("category", category);
+                      if (selectedCategory === category) {
+                        setSelectedCategory(null);
+                        query.delete("category");
+                      } else {
+                        setSelectedCategory(category);
+                        query.set("category", category);
+                      }
                     }}
                   >
                     {category}
@@ -151,15 +166,20 @@ export default function ShopAction() {
                 {sizes.map((s, i) => (
                   <button
                     key={i}
-                    className={`font-light border py-1 px-4 rounded hover:font-medium 
+                    className={`font-light border py-1 px-4 rounded hover:font-medium cursor-pointer
                       ${
                         selectedSize === s
                           ? "border-blue-500 font-medium text-blue-500 hover:border-blue-300"
                           : "border-gray-300"
                       }`}
                     onClick={() => {
-                      setSelectedSize(s);
-                      query.set("size", s);
+                      if (selectedSize === s) {
+                        setSelectedSize(null);
+                        query.delete("size");
+                      } else {
+                        setSelectedSize(s);
+                        query.set("size", s);
+                      }
                     }}
                   >
                     {s}
@@ -183,8 +203,13 @@ export default function ShopAction() {
                           : "border-gray-300"
                       }`}
                     onClick={() => {
-                      setSelectedPrice(price.price);
-                      query.set("price", price.price);
+                      if (selectedPrice === price.price) {
+                        setSelectedPrice(null);
+                        query.delete("size");
+                      } else {
+                        setSelectedPrice(price.price);
+                        query.set("price", price.price);
+                      }
                     }}
                   >
                     {price.value}

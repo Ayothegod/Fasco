@@ -30,10 +30,10 @@ import { query } from "../services/useSearchParams";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import { db } from "@/shared/lib/seed";
 import api from "@/core/config/axios";
+import type { AxiosResponse } from "axios";
+import type { Product } from "../services/type";
 
 export default function ShopAction() {
-  const isLoading = true;
-
   useEffect(() => {
     const page = query.get("page");
     if (!page) {
@@ -70,39 +70,32 @@ export default function ShopAction() {
     category
   );
 
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // const fetchProducts = async () => {
-  //   const page = query.get("page") ?? "1";
-  //   let limit = "12";
-  //   console.log(collection, size, price, gender, category, page, limit);
+  const fetchProducts = async () => {
+    setLoading(true);
 
-  //   toast({
-  //     title: "Event has been created",
-  //     description: "Sunday, December 03, 2023 at 9:00 AM",
-  //     // action: {
-  //     //   label: "Undo",
-  //     //   onClick: () => console.log("Undo"),
-  //     // },
-  //   });
+    const page = query.get("page") ?? "1";
+    let limit = "12";
 
-  //   // /products?page=1&collection=allClothing&gender=women&price=0-49&category=footwear&size=M
+    try {
+      const res: AxiosResponse<{ msg: string; products: Product[] }, any> =
+        await api.get(`/products`, {
+          params: { page, collection, gender, price, category, size, limit },
+        });
+      console.log(res.data);
 
-  //   try {
-  //     setLoading(true);
-  //     const res = await api.get(`/api/products`, {
-  //       // params: { color, gender, page },
-  //     });
-  //     setProducts(res.data.products || []);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+      setProducts(res.data.products ?? []);
+    } catch (err) {
+      console.log("Error", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // ⏱️ Fetch on load and every time the URL changes
   useEffect(() => {
-    // fetchProducts();
+    fetchProducts();
   }, [window.location.search]);
 
   return (
@@ -296,7 +289,7 @@ export default function ShopAction() {
           </Select>
 
           <div className="mt-4">
-            {isLoading ? (
+            {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 {[1, 2, 3, 4, 5, 6].map((skeleton, i) => (
                   <div className="h-[520px]" key={i}>
@@ -316,10 +309,10 @@ export default function ShopAction() {
             ) : (
               <div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                  {db.slice(9).map((product, index) => (
+                  {products.map((product, index) => (
                     <a
-                      href={`/products/${product.id}`}
-                      key={product.id}
+                      href={`/products/${product._id}`}
+                      key={product.slug.current}
                       className="h-[520px] "
                     >
                       <div className="h-full flex flex-col gap-2">

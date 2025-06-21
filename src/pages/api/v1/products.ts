@@ -53,15 +53,11 @@ export async function GET({ request, params, url: oldUrl }: APIContext) {
     `;
 
     const products = await server.fetch(query);
-    return Response.json({ products: products });
-    // {message, data}
+    return Response.json({ products, msg: "fetched data successfully" });
   } catch (error) {
     console.log(error);
 
-    return Response.json(
-      { error: "Unable to fetch data." },
-      { status: 500 }
-    );
+    return Response.json({ error: "Unable to fetch data." }, { status: 500 });
   }
 }
 

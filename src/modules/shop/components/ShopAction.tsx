@@ -29,7 +29,7 @@ import {
 import { query } from "../services/useSearchParams";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import { db } from "@/shared/lib/seed";
-import { client } from "@/core/config/sanityClient";
+import api from "@/core/config/axios";
 
 export default function ShopAction() {
   const isLoading = true;

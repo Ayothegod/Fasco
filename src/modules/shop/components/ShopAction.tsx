@@ -30,10 +30,8 @@ import { query } from "../services/useSearchParams";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import { db } from "@/shared/lib/seed";
 import api from "@/core/config/axios";
-import { useToast } from "@/shared/hooks/use-toast";
 
 export default function ShopAction() {
-  const { toast } = useToast();
   const isLoading = true;
 
   useEffect(() => {
@@ -276,8 +274,6 @@ export default function ShopAction() {
             </div>
           </section>
         </aside>
-
-        
 
         <main className="w-full">
           <div></div>

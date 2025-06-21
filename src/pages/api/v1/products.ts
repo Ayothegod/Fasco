@@ -2,17 +2,66 @@ import { server } from "@/core/config/sanityClient";
 import { prisma } from "@/core/database/prisma";
 import type { APIRoute, APIContext } from "astro";
 
-export async function GET({ request, params, url }: APIContext) {
-  console.log({ params, url });
+export async function GET({ request, params, url: oldUrl }: APIContext) {
+  const url = new URL(oldUrl);
+
+  const collection = url.searchParams.get("collection");
+  const size = url.searchParams.get("size");
+  const price = url.searchParams.get("price");
+  const gender = url.searchParams.get("gender");
+  const category = url.searchParams.get("category");
+
+  const page = Number(url.searchParams.get("page") || 1);
+  const limit = Number(url.searchParams.get("limit") || 12);
+
+  const start = (page - 1) * limit;
+  const end = start + limit;
+
+  let priceFilter = "";
+
+  if (price?.includes("-")) {
+    const [min, max] = price.split("-").map(Number);
+    priceFilter = `price >= ${min} && price <= ${max}`;
+  } else if (price?.endsWith("+")) {
+    const min = Number(price.replace("+", ""));
+    priceFilter = `price >= ${min}`;
+  }
+
+  const sortOrder =
+    collection === "newArrival"
+      ? "desc"
+      : collection === "allClothing"
+      ? "asc"
+      : collection === "bestSelling"
+      ? "desc"
+      : "desc";
 
   try {
-    // const posts = await server.fetch(`*[_type == 'product']`);
-    // console.log(posts);
+    const filters = [
+      `_type == "product"`,
+      gender ? `gender == "${gender}"` : null,
+      category ? `subCategory == "${category}"` : null,
+      priceFilter,
+    ]
+      .filter(Boolean)
+      .join(" && ");
 
-    return Response.json({ posts: "posts" });
+    const query = `
+      *[${filters} ${size ? `&& "${size}" in sizes[]` : ""}]
+      | order(_createdAt ${sortOrder})
+      [${start}...${end}]
+    `;
+
+    const products = await server.fetch(query);
+    return Response.json({ products: products });
     // {message, data}
   } catch (error) {
-    return Response.json({ error: "Unable to fetch ssanity data" });
+    console.log(error);
+
+    return Response.json(
+      { error: "Unable to fetch data." },
+      { status: 500 }
+    );
   }
 }
 

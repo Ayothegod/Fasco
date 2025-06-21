@@ -34,26 +34,12 @@ import api from "@/core/config/axios";
 export default function ShopAction() {
   const isLoading = true;
 
-  // useEffect(() => {
-  //   client
-  //     .fetch(`*[]`)
-  //     .then((data) => {
-  //       console.log(data);
-
-  //       setPosts(data);
-  //     })
-  //     .catch(console.error);
-  // }, []);
-
-  // let limit = 12;
-  // let page = 1
-
-  //   const page = Number(searchParams.get("page") || 1);
-  //   const limit = Number(searchParams.get("limit") || 12);
-  // const start = (page - 1) * limit
-  // const end = start + limit
-
   useEffect(() => {
+    const page = query.get("page");
+    if (!page) {
+      query.set("page", "1");
+    }
+
     const collection = query.get("collection");
     if (!collection) {
       query.set("collection", "allClothing");
@@ -83,6 +69,30 @@ export default function ShopAction() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     category
   );
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProducts = async () => {
+    const page = query.get("page") ?? "1";
+    let limit = "12";
+    console.log(collection, size, price, gender, category, page, limit);
+
+    // try {
+    //   setLoading(true);
+    //   const res = await api.get(`/api/products`, {
+    //     params: { color, gender, page },
+    //   });
+    //   setProducts(res.data.products || []);
+    // } finally {
+    //   setLoading(false);
+    // }
+  };
+
+  // ⏱️ Fetch on load and every time the URL changes
+  useEffect(() => {
+    fetchProducts();
+  }, [window.location.search]);
 
   return (
     <main className="min-h-[60vh]">
@@ -270,7 +280,6 @@ export default function ShopAction() {
                 <SelectItem value="allClothing">All Clothing</SelectItem>
                 <SelectItem value="bestSelling">Best Selling</SelectItem>
                 <SelectItem value="newArrivals">New Arrivals</SelectItem>
-                <SelectItem value="accessories">Accessories</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>

@@ -7,7 +7,7 @@ export const priceRange = [
 
 export const sizes = ["S", "M", "L", "XL"];
 
-export const genders = ["male", "female", "unisex"];
+export const genders = ["men", "women", "unisex"];
 
 const colors = [
   "beige",

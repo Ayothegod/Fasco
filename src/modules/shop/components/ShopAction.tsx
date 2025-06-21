@@ -30,8 +30,10 @@ import { query } from "../services/useSearchParams";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import { db } from "@/shared/lib/seed";
 import api from "@/core/config/axios";
+import { useToast } from "@/shared/hooks/use-toast";
 
 export default function ShopAction() {
+  const { toast } = useToast();
   const isLoading = true;
 
   useEffect(() => {
@@ -73,25 +75,36 @@ export default function ShopAction() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchProducts = async () => {
-    const page = query.get("page") ?? "1";
-    let limit = "12";
-    console.log(collection, size, price, gender, category, page, limit);
+  // const fetchProducts = async () => {
+  //   const page = query.get("page") ?? "1";
+  //   let limit = "12";
+  //   console.log(collection, size, price, gender, category, page, limit);
 
-    // try {
-    //   setLoading(true);
-    //   const res = await api.get(`/api/products`, {
-    //     params: { color, gender, page },
-    //   });
-    //   setProducts(res.data.products || []);
-    // } finally {
-    //   setLoading(false);
-    // }
-  };
+  //   toast({
+  //     title: "Event has been created",
+  //     description: "Sunday, December 03, 2023 at 9:00 AM",
+  //     // action: {
+  //     //   label: "Undo",
+  //     //   onClick: () => console.log("Undo"),
+  //     // },
+  //   });
+
+  //   // /products?page=1&collection=allClothing&gender=women&price=0-49&category=footwear&size=M
+
+  //   try {
+  //     setLoading(true);
+  //     const res = await api.get(`/api/products`, {
+  //       // params: { color, gender, page },
+  //     });
+  //     setProducts(res.data.products || []);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // ⏱️ Fetch on load and every time the URL changes
   useEffect(() => {
-    fetchProducts();
+    // fetchProducts();
   }, [window.location.search]);
 
   return (
@@ -263,6 +276,8 @@ export default function ShopAction() {
             </div>
           </section>
         </aside>
+
+        
 
         <main className="w-full">
           <div></div>

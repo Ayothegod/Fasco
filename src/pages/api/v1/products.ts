@@ -46,14 +46,30 @@ export async function GET({ request, params, url: oldUrl }: APIContext) {
       .filter(Boolean)
       .join(" && ");
 
-    const query = `
+    const filteredQuery = `
       *[${filters} ${size ? `&& "${size}" in sizes[]` : ""}]
       | order(_createdAt ${sortOrder})
       [${start}...${end}]
     `;
 
-    const products = await server.fetch(query);
-    return Response.json({ products, msg: "fetched data successfully" });
+    const completeQuery = `
+      *[${filters} ${size ? `&& "${size}" in sizes[]` : ""}]
+      | order(_createdAt ${sortOrder})
+    `;
+
+    // const products = await server.fetch(query);
+    const [filtered, complete] = await Promise.all([
+      server.fetch(filteredQuery),
+      server.fetch(completeQuery),
+    ]);
+
+    console.log(filtered.length, complete.length);
+
+    return Response.json({
+      filtered: filtered,
+      complete: complete,
+      msg: "fetched data successfully",
+    });
   } catch (error) {
     console.log(error);
 

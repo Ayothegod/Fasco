@@ -33,6 +33,16 @@ import api from "@/core/config/axios";
 import type { AxiosResponse } from "axios";
 import type { Product } from "../services/type";
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/shared/components/ui/pagination";
+
 export default function ShopAction() {
   useEffect(() => {
     const page = query.get("page");
@@ -70,23 +80,28 @@ export default function ShopAction() {
     category
   );
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [completeProducts, setCompleteProducts] = useState<Product[]>([]);
+
   const [loading, setLoading] = useState(false);
+
+  const page = query.get("page") ?? "1";
+  let limit = "12";
 
   const fetchProducts = async () => {
     setLoading(true);
 
-    const page = query.get("page") ?? "1";
-    let limit = "12";
-
     try {
-      const res: AxiosResponse<{ msg: string; products: Product[] }, any> =
-        await api.get(`/products`, {
-          params: { page, collection, gender, price, category, size, limit },
-        });
+      const res: AxiosResponse<
+        { msg: string; filtered: Product[]; complete: Product[] },
+        any
+      > = await api.get(`/products`, {
+        params: { page, collection, gender, price, category, size, limit },
+      });
       console.log(res.data);
 
-      setProducts(res.data.products ?? []);
+      setFilteredProducts(res.data.filtered ?? []);
+      setCompleteProducts(res.data.complete ?? []);
     } catch (err) {
       console.log("Error", err);
     } finally {
@@ -97,6 +112,20 @@ export default function ShopAction() {
   useEffect(() => {
     fetchProducts();
   }, [window.location.search]);
+
+  const basePath = "http://localhost:4321/shop";
+  const getHref = (page: number) => `${basePath}?page=${page}`;
+
+  const totalPages = Math.round(completeProducts.length / 12);
+  // console.log(totalPages);
+
+  const setPrev = () => {
+    const prevPage = Math.max(1, Number(page) - 1);
+    query.set("page", prevPage.toString())
+    const searchParams = new URLSearchParams(window.location.search);
+    const href = `?${searchParams.toString()}`;
+    return href
+  };
 
   return (
     <main className="min-h-[60vh]">
@@ -269,7 +298,6 @@ export default function ShopAction() {
         </aside>
 
         <main className="w-full">
-          <div></div>
           <Select
             onValueChange={(value) => {
               query.set("collection", value);
@@ -309,9 +337,9 @@ export default function ShopAction() {
             ) : (
               <div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                  {products.map((product, index) => (
+                  {filteredProducts.map((product, index) => (
                     <a
-                      href={`/products/${product._id}`}
+                      href={`/products/${product.slug.current}`}
                       key={product.slug.current}
                       className="h-[520px] "
                     >
@@ -328,11 +356,14 @@ export default function ShopAction() {
                             </p>
                             <p className="font-light">
                               <span className="font-medium">
-                                {product.price}
+                                ${product.price}
                               </span>
                             </p>
                           </div>
-                          <p className="h-7 w-7 rounded-full bg-red-400"></p>
+                          <p
+                            className={`h-7 w-7 rounded-full shrink-0`}
+                            style={{ backgroundColor: product.color }}
+                          ></p>
                         </div>
                       </div>
                     </a>
@@ -341,6 +372,37 @@ export default function ShopAction() {
               </div>
             )}
           </div>
+
+          <Pagination className="mt-20">
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href={() => setPrev()}
+
+                  // href={`?page=${Math.max(1, Number(page) - 1)}`}
+                />
+              </PaginationItem>
+
+              {Array.from({ length: totalPages }, (_, i) => (
+                <PaginationItem key={i + 1}>
+                  <PaginationLink
+                    href={getHref(i + 1)}
+                    isActive={Number(page) === i + 1}
+                  >
+                    {i + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+
+              <PaginationItem>
+                <PaginationNext
+                  href={`?page=${Math.min(totalPages, Number(page) + 1)}`}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+
+          {/* <AppPagination currentPage={page} totalPages={totalPages} basePath="/products" /> */}
         </main>
       </section>
 

@@ -1,3 +1,5 @@
+export const basePath = "http://localhost:4321/shop"
+
 export const priceRange = [
   { price: "0-49", value: "$0 - $49" },
   { price: "50-99", value: "$50 - $99" },

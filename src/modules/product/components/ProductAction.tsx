@@ -174,27 +174,20 @@ export default function ProductAction({ product }: { product: Product }) {
         <div>
           {!isAddedToCart ? (
             <Button
-              className="flex items-center justify-center w-full gap-8"
-              // onClick={addToCart}
-              // disabled={!user.user}
+              size={"lg"}
+              className="flex items-center cursor-pointer justify-center w-full gap-8 py-6"
             >
-              <ShoppingBag /> Add to cart
+              <ShoppingBag /> <p className="text-lg">Add to cart</p>
             </Button>
           ) : (
-            <Button
-              // disabled={!user}
-              className=" w-full"
-              // onClick={setOpenCartSidebar}
-            >
-              Open cart
-            </Button>
+            <Button className=" w-full">Open cart</Button>
           )}
         </div>
 
         <div className="mt-10 space-y-2">
           <div className="flex gap-4">
             <div className="text-xs flex items-center gap-2 cursor-pointer border border-white hover:border-neutral-200 w-max rounded-md p-1">
-              <ShieldQuestion className="h-4 w-4" />
+              <ShieldQuestion className="h-8 w-8" />
               <p>Ask a question</p>
             </div>
             <div className="text-xs flex items-center gap-2 cursor-pointer border border-white hover:border-neutral-200 w-max rounded-md p-1">

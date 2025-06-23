@@ -1,9 +1,5 @@
-// import { LayoutGrid, Menu } from "lucide-react";
 import slider from "@/assets/images/slider.png";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
-// import FollowUs from "~/components/build/FollowUs";
-// import Newsletter from "~/components/build/Newsletter";
+import api from "@/core/config/axios";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,29 +16,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/ui/select";
+import { Skeleton } from "@/shared/components/ui/skeleton";
+import type { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
 import {
   genders,
   priceRange,
   sizes,
   subCategories,
 } from "../services/constants";
-import { query } from "../services/useSearchParams";
-import { Skeleton } from "@/shared/components/ui/skeleton";
-import { db } from "@/shared/lib/seed";
-import api from "@/core/config/axios";
-import type { AxiosResponse } from "axios";
 import type { Product } from "../services/type";
+import { query } from "../services/useSearchParams";
 
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/shared/components/ui/pagination";
 import { getPaginationRange } from "../services/paginationRange";
+import FollowUs from "@/modules/index/components/FollowUs.astro";
+import Newsletter from "@/modules/index/components/Newsletter.astro";
 
 export default function ShopAction() {
   useEffect(() => {
@@ -270,28 +266,6 @@ export default function ShopAction() {
                   </button>
                 ))}
               </div>
-
-              {/* <div className="space-y-2">
-                <h4 className="text-lg font-serif font-bold tracking-wide">
-                  Colors
-                </h4>
-                <div className="flex items-start flex-wrap gap-1">
-                  {colors.map((color, i) => (
-                    <p
-                      key={i}
-                      style={{ backgroundColor: color }}
-                      className={`h-6 w-6 rounded-full cursor-pointer border
-                      ${selectedColor === color ? "border border-blue-500" : ""}
-                      `}
-                      onClick={() => {
-                        console.log(color);
-                        setSelectedCategory(color);
-                        query.set("color", color);
-                      }}
-                    ></p>
-                  ))}
-                </div>
-              </div> */}
             </div>
           </section>
         </aside>
@@ -433,8 +407,8 @@ export default function ShopAction() {
         <img src={slider.src} alt="top-banner-image" className="" />
       </section>
 
-      {/* <FollowUs /> */}
-      {/* <Newsletter /> */}
+      <FollowUs />
+      <Newsletter />
     </main>
   );
 }

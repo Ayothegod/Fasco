@@ -1,28 +1,24 @@
 ---
-import Layout from "@/shared/layouts/Layout.astro";
-import TestPage from "../shared/components/test";
-// <!-- <TestPage client:load /> -->
-// <!-- <a href="/signup" class="text-3xl">Vist the signup page</a> -->
-
+import bottomBanner from "@/assets/images/image (1).png";
 import {
   default as leftBanner,
   default as rightBanner,
 } from "@/assets/images/image 227.png";
-import bottomBanner from "@/assets/images/image (1).png";
 import topBanner from "@/assets/images/image.png";
 import pradaLogo from "@/assets/images/logo (1).png";
 import louisVuittonLogo from "@/assets/images/logo (2).png";
 import chanelLogo from "@/assets/images/logo (3).png";
 import calvinKleinLogo from "@/assets/images/logo.png";
 import slider from "@/assets/images/slider.png";
+import Layout from "@/shared/layouts/Layout.astro";
 
-import { Image } from "astro:assets";
-import { Button } from "@/shared/components/ui/button";
-import { followUsImages } from "@/modules/index/services/indexUtils";
-import NewArrivals from "@/modules/index/components/NewArrivals";
 import Deals from "@/modules/index/components/Deals.astro";
-import Testimonial from "@/modules/index/components/Testimonial.astro";
+import FollowUs from "@/modules/index/components/FollowUs.astro";
+import NewArrivals from "@/modules/index/components/NewArrivals";
 import Newsletter from "@/modules/index/components/Newsletter.astro";
+import Testimonial from "@/modules/index/components/Testimonial.astro";
+import { Button } from "@/shared/components/ui/button";
+import { Image } from "astro:assets";
 ---
 
 <Layout
@@ -146,39 +142,7 @@ import Newsletter from "@/modules/index/components/Newsletter.astro";
     </section>
 
     <!-- NOTE: Follow us  -->
-    <section class="mt-8 mb-16">
-      <div class="text-center">
-        <h2
-          class="text-2xl sm:text-3xl md:text-2xl font-serif font-bold tracking-wide"
-        >
-          Follow Us On Instagram
-        </h2>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-          delectus vel dolor in ex nobis sint itaque vitae, minus saepe?
-        </p>
-      </div>
-
-      <div class="flex overflow-x-hidden items-center mt-10">
-        {
-          followUsImages.map((image, index) => (
-            <div
-              class={`shrink-0 w-full lg:w-1/7 md:w-1/5 sm:w-1/2 ${
-                index % 2 === 0 ? "normal" : ""
-              }`}
-            >
-              <img
-                src={image.src.src}
-                alt={`img-${index}`}
-                class={`w-full transition-transform duration-300 object-cover object-top ${
-                  index % 2 === 1 ? "h-60" : "h-48"
-                }`}
-              />
-            </div>
-          ))
-        }
-      </div>
-    </section>
+    <FollowUs/>
 
     <!-- NOTE: testimonial -->
      <Testimonial/>

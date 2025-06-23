@@ -56,14 +56,6 @@ export default function ShopAction() {
     }
   }, []);
 
-  // NOTE:
-  //   useEffect(() => {
-  //   const gender = query.get("gender");
-  //   if (gender) setSelectedGender(gender);
-  // }, []);
-  // You're reading query params after a navigation event or dynamic update.
-  // Or you're using React Router / SPA-style routing where the page doesn't reload.
-
   const collection = query.get("collection") ?? "";
 
   const size = query.get("size") ?? "";
@@ -98,12 +90,13 @@ export default function ShopAction() {
       > = await api.get(`/products`, {
         params: { page, collection, gender, price, category, size, limit },
       });
-      console.log(res.data);
+      // console.log(res.data);
 
       setFilteredProducts(res.data.filtered ?? []);
       setCompleteProducts(res.data.complete ?? []);
     } catch (err) {
       console.log("Error", err);
+      // NOTE: handle errors
     } finally {
       setLoading(false);
     }
@@ -113,19 +106,24 @@ export default function ShopAction() {
     fetchProducts();
   }, [window.location.search]);
 
-  const basePath = "http://localhost:4321/shop";
-  const getHref = (page: number) => `${basePath}?page=${page}`;
-
   const totalPages = Math.round(completeProducts.length / 12);
-  // console.log(totalPages);
+  // console.log(totalPages, filteredProducts.length, completeProducts.length);
 
-  const setPrev = () => {
-    const prevPage = Math.max(1, Number(page) - 1);
-    query.set("page", prevPage.toString())
-    const searchParams = new URLSearchParams(window.location.search);
-    const href = `?${searchParams.toString()}`;
-    return href
+  const getHref = (page: number) => {
+    const currentParams = new URLSearchParams(window.location.search);
+    currentParams.set("page", page.toString());
+    return `/shop?${currentParams.toString()}`;
   };
+
+  const newQuery = new URLSearchParams(window.location.search);
+
+  const prevPage = Math.max(1, Number(page) - 1);
+  newQuery.set("page", prevPage.toString());
+  const prevHref = `?${newQuery.toString()}`;
+
+  const nextPage = Math.min(totalPages, Number(page) + 1);
+  newQuery.set("page", nextPage.toString());
+  const nextHref = `?${newQuery.toString()}`;
 
   return (
     <main className="min-h-[60vh]">
@@ -377,26 +375,43 @@ export default function ShopAction() {
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
-                  href={() => setPrev()}
-
-                  // href={`?page=${Math.max(1, Number(page) - 1)}`}
+                  href={Number(page) > 1 ? prevHref : undefined}
+                  aria-disabled={Number(page) <= 1}
+                  className={
+                    Number(page) <= 1 ? "pointer-events-none opacity-50" : ""
+                  }
                 />
               </PaginationItem>
 
-              {Array.from({ length: totalPages }, (_, i) => (
-                <PaginationItem key={i + 1}>
-                  <PaginationLink
-                    href={getHref(i + 1)}
-                    isActive={Number(page) === i + 1}
-                  >
-                    {i + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
+              {Array.from({ length: totalPages }, (_, i) => {
+                const targetPage = i + 1;
+                const isCurrent = targetPage === Number(page);
+
+                return (
+                  <PaginationItem key={targetPage}>
+                    <PaginationLink
+                      isActive={isCurrent}
+                      href={isCurrent ? undefined : getHref(targetPage)}
+                      aria-current={isCurrent ? "page" : undefined}
+                      className={
+                        isCurrent ? "pointer-events-none opacity-50" : ""
+                      }
+                    >
+                      {targetPage}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              })}
 
               <PaginationItem>
                 <PaginationNext
-                  href={`?page=${Math.min(totalPages, Number(page) + 1)}`}
+                  href={Number(page) !== totalPages ? nextHref : undefined}
+                  aria-disabled={Number(page) == totalPages}
+                  className={
+                    Number(page) == totalPages
+                      ? "pointer-events-none opacity-50"
+                      : ""
+                  }
                 />
               </PaginationItem>
             </PaginationContent>

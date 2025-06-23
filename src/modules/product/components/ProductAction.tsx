@@ -7,7 +7,7 @@ import {
   ShoppingBasket,
   Star,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { Button } from "@/shared/components/ui/button";
 import slider from "@/assets/images/slider.png";
@@ -18,6 +18,7 @@ import { Skeleton } from "@/shared/components/ui/skeleton";
 import type { Product } from "@/modules/shop/services/type";
 import { Progress } from "@/shared/components/ui/progress";
 import { getStockMessage } from "../services/productUtil";
+import { query } from "@/modules/shop/services/useSearchParams";
 
 // const fetcher = (url: any) => fetch(url).then((res) => res.json());
 //   const { data, error, isLoading } = useSWR(
@@ -26,18 +27,33 @@ import { getStockMessage } from "../services/productUtil";
 //   );
 
 export default function ProductAction({ product }: { product: Product }) {
+  const message = getStockMessage(product.stock);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
-  
-  const [selectedSize, setSelectedSize] = useState("S");
-  const buttonSizes = ["S", "M", "L", "XL"];
+
+  useEffect(() => {
+    const size = query.get("size");
+    if (!size) {
+      query.set("size", product.sizes[0]);
+    }
+
+    const quantity = query.get("quantity");
+    if (!quantity) {
+      query.set("quantity", "1");
+    }
+  }, []);
+
+  const size = query.get("size") ?? "";
+  const [selectedSize, setSelectedSize] = useState<string | null>(size);
+
   const buttonSelected = (size: string) => {
-    const selected = size ? size : selectedSize;
+    query.set("size", size);
     setSelectedSize(size);
   };
 
-  const message = getStockMessage(product.stock);
-  // const quantity: any = getItemQuantity(data?.id);
+  const quan = query.get("quantity") ?? "";
+  const [quantity, setQuantity] = useState<number>(Number(quan));
 
+  // const quantity: any = getItemQuantity(data?.id);
   // const addToCart = () => {
   //   const newItem = {
   //     title: data.title,
@@ -91,20 +107,18 @@ export default function ProductAction({ product }: { product: Product }) {
         )}
         <div className="w-full flex flex-col gap-2 my-4">
           <p>Only {product.stock} item[s] left in stock!</p>
-
           <Progress value={product.stock} className="w-full" />
         </div>
 
         <div className="">
           <p className="font-bold text-lg">size: {selectedSize}</p>
           <div className="flex gap-4 mt-2">
-            {buttonSizes.map((size) => (
+            {product.sizes.map((size) => (
               <Button
                 key={size}
                 variant="outline"
                 onClick={() => buttonSelected(size)}
-                className={`p-5 rounded ${
-                  
+                className={`p-5 rounded cursor-pointer ${
                   selectedSize === size &&
                   "bg-black hover:bg-black/90 text-white hover:text-white"
                 }`}
@@ -116,7 +130,7 @@ export default function ProductAction({ product }: { product: Product }) {
         </div>
 
         <div className="my-4">
-          <p className="text-lg font-medium">color: Color</p>
+          <p className="text-lg font-bold">color: Color</p>
           <div className="flex gap-2 mt-2">
             <div className="h-6 w-6 bg-red-500 rounded-full"></div>
             <div className="h-6 w-6 bg-green-500 rounded-full"></div>
@@ -124,22 +138,33 @@ export default function ProductAction({ product }: { product: Product }) {
         </div>
 
         <div>
-          <p className="font-bold text-sm">Quantity</p>
+          <p className="font-bold text-lg">Quantity</p>
           <div className="mt-2">
             <Button
-              className="rounded-none rounded-l-md px-8"
+              className="rounded-none cursor-pointer rounded-l-md p-6"
               variant="outline"
-              // onClick={() => decreaseQuantity(data?.id)}
+              onClick={() => {
+                if (quantity > 1) {
+                  setQuantity(quantity - 1);
+                  query.set("quantity", String(quantity - 1));
+                }
+              }}
             >
               -
             </Button>
-            <Button className="rounded-none px-8" variant="outline">
-              {/* {quantity} */} 20
+            <Button
+              className="rounded-none cursor-pointer p-6"
+              variant="outline"
+            >
+              {quantity}
             </Button>
             <Button
-              className="rounded-none rounded-r-md px-8"
+              className="rounded-none cursor-pointer rounded-r-md p-6"
               variant="outline"
-              // onClick={() => increaseQuantity(data?.id)}
+              onClick={() => {
+                setQuantity(quantity + 1);
+                query.set("quantity", String(quantity + 1));
+              }}
             >
               +
             </Button>

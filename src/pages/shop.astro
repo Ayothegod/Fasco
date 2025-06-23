@@ -1,6 +1,9 @@
 ---
 import ShopAction from "@/modules/shop/components/ShopAction";
 import Layout from "@/shared/layouts/Layout.astro";
+import slider from "@/assets/images/slider.png";
+import Newsletter from "@/modules/index/components/Newsletter";
+import FollowUs from "@/modules/index/components/FollowUs";
 ---
 
 <Layout
@@ -8,4 +11,11 @@ import Layout from "@/shared/layouts/Layout.astro";
   description="Browse all fashion items including men's and women's clothing, shoes, belts, and more. Curated styles for every look — only at Fasco."
 >
   <ShopAction client:only />
+
+  <section class="hidden md:block mt-28 mb-16">
+    <img src={slider.src} alt="top-banner-image" class="" />
+  </section>
+
+  <FollowUs />
+  <Newsletter />
 </Layout>

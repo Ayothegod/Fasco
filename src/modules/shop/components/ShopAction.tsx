@@ -1,4 +1,3 @@
-import slider from "@/assets/images/slider.png";
 import api from "@/core/config/axios";
 import {
   Breadcrumb,
@@ -37,8 +36,6 @@ import {
   PaginationPrevious,
 } from "@/shared/components/ui/pagination";
 import { getPaginationRange } from "../services/paginationRange";
-import Newsletter from "@/modules/index/components/Newsletter";
-import FollowUs from "../../index/components/FollowUs";
 
 export default function ShopAction() {
   useEffect(() => {
@@ -402,13 +399,6 @@ export default function ShopAction() {
           {/* <AppPagination currentPage={page} totalPages={totalPages} basePath="/products" /> */}
         </main>
       </section>
-
-      <section className="hidden md:block mt-16 mb-16">
-        <img src={slider.src} alt="top-banner-image" className="" />
-      </section>
-
-      <FollowUs />
-      <Newsletter />
     </main>
   );
 }

@@ -16,6 +16,8 @@ import FollowUs from "@/modules/index/components/FollowUs";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 // import { cartStore, stateStore } from "~/lib/store";
 import type { Product } from "@/modules/shop/services/type";
+import { Progress } from "@/shared/components/ui/progress";
+import { getStockMessage } from "../services/productUtil";
 
 // const fetcher = (url: any) => fetch(url).then((res) => res.json());
 //   const { data, error, isLoading } = useSWR(
@@ -24,15 +26,16 @@ import type { Product } from "@/modules/shop/services/type";
 //   );
 
 export default function ProductAction({ product }: { product: Product }) {
-  // const param = useParams();
-  // const [isAddedToCart, setIsAddedToCart] = useState(false);
-  // const [selectedSize, setSelectedSize] = useState("S");
-  // const buttonSizes = ["S", "M", "L", "XL"];
-  // const buttonSelected = (button: any) => {
-  //   const selected = button ? button : selectedSize;
-  //   setSelectedSize(button);
-  // };
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
+  
+  const [selectedSize, setSelectedSize] = useState("S");
+  const buttonSizes = ["S", "M", "L", "XL"];
+  const buttonSelected = (size: string) => {
+    const selected = size ? size : selectedSize;
+    setSelectedSize(size);
+  };
 
+  const message = getStockMessage(product.stock);
   // const quantity: any = getItemQuantity(data?.id);
 
   // const addToCart = () => {
@@ -50,12 +53,8 @@ export default function ProductAction({ product }: { product: Product }) {
   //   addItemToCart(newItem);
   // };
 
-  // if (error) {
-  //   return <div>Error fetching data...</div>;
-  // }
-
   return (
-    <div className="flex flex-col md:flex-row gap-4 mt-8">
+    <div className="flex flex-col md:flex-row gap-4 mt-24">
       <div className="border w-full md:w-1/2 flex gap-2 h-[460px] md:h-[640px]">
         <img
           src={product.imageUrl}
@@ -64,61 +63,60 @@ export default function ProductAction({ product }: { product: Product }) {
         />
       </div>
 
-      {/* <div className=" flex flex-col gap-4  w-full md:max-w-1/2 flex-1 ">
+      <div className=" flex flex-col gap-4  w-full md:max-w-1/2 flex-1 ">
+        <h1 className="text-xl font-serif tracking-wide">FASCO</h1>
+
         <div className="flex items-center justify-between">
-          {isLoading ? (
-            <Skeleton className="h-8 w-[400px]" />
-          ) : (
-            <h1 className="font-bold text-xl">{data?.title}</h1>
-          )}
+          <h1 className="font-bold text-3xl">{product.productName}</h1>
           <Star />
         </div>
 
         <div>
-          {isLoading ? (
-            <Skeleton className="h-32 w-full" />
-          ) : (
-            <h1 className="">{data?.description}</h1>
-          )}
+          <h1 className="">{product.description}</h1>
         </div>
 
         <div className="flex items-center gap-4">
-          {isLoading ? (
-            <Skeleton className="h-6 w-[240px]" />
-          ) : (
-            <p className="font-bold">${data?.price}</p>
-          )}
+          <p className="font-bold text-2xl">${product?.price}</p>
 
-          <span className="text-xs bg-red-600 p-2 text-white rounded-md">
-            {data?.availabilityStatus}
+          <p className="opacity-50">${product?.price}</p>
+
+          <span className="text-xs bg-red-600 p-2 text-white font-medium rounded-full">
+            Save {product.stock}%
           </span>
         </div>
+        {message && (
+          <div className="w-full bg-pink-100 border border-pink-200 p-2 flex items-center justify-between rounded-md my-4">
+            <p className="text-pink-400 text-xl font-serif">{message}</p>
+          </div>
+        )}
+        <div className="w-full flex flex-col gap-2 my-4">
+          <p>Only {product.stock} item[s] left in stock!</p>
 
-        <div className="w-full bg-pink-100 border border-pink-200 py-2 flex items-center justify-center rounded-md">
-          <p>Hurry up and buy stuff</p>
+          <Progress value={product.stock} className="w-full" />
         </div>
 
         <div className="">
-          <p className="font-bold text-sm">size: {selectedSize}</p>
+          <p className="font-bold text-lg">size: {selectedSize}</p>
           <div className="flex gap-4 mt-2">
-            {buttonSizes.map((button) => (
+            {buttonSizes.map((size) => (
               <Button
-                key={button}
+                key={size}
                 variant="outline"
-                onClick={() => buttonSelected(button)}
-                className={`${
-                  selectedSize === button &&
+                onClick={() => buttonSelected(size)}
+                className={`p-5 rounded ${
+                  
+                  selectedSize === size &&
                   "bg-black hover:bg-black/90 text-white hover:text-white"
                 }`}
               >
-                {button}
+                {size}
               </Button>
             ))}
           </div>
         </div>
 
-        <div>
-          <p className="text-sm font-medium">Available colors</p>
+        <div className="my-4">
+          <p className="text-lg font-medium">color: Color</p>
           <div className="flex gap-2 mt-2">
             <div className="h-6 w-6 bg-red-500 rounded-full"></div>
             <div className="h-6 w-6 bg-green-500 rounded-full"></div>
@@ -131,17 +129,17 @@ export default function ProductAction({ product }: { product: Product }) {
             <Button
               className="rounded-none rounded-l-md px-8"
               variant="outline"
-              onClick={() => decreaseQuantity(data?.id)}
+              // onClick={() => decreaseQuantity(data?.id)}
             >
               -
             </Button>
             <Button className="rounded-none px-8" variant="outline">
-              {quantity}
+              {/* {quantity} */} 20
             </Button>
             <Button
               className="rounded-none rounded-r-md px-8"
               variant="outline"
-              onClick={() => increaseQuantity(data?.id)}
+              // onClick={() => increaseQuantity(data?.id)}
             >
               +
             </Button>
@@ -152,16 +150,16 @@ export default function ProductAction({ product }: { product: Product }) {
           {!isAddedToCart ? (
             <Button
               className="flex items-center justify-center w-full gap-8"
-              onClick={addToCart}
-              disabled={!user.user}
+              // onClick={addToCart}
+              // disabled={!user.user}
             >
               <ShoppingBag /> Add to cart
             </Button>
           ) : (
             <Button
-              disabled={!user}
+              // disabled={!user}
               className=" w-full"
-              onClick={setOpenCartSidebar}
+              // onClick={setOpenCartSidebar}
             >
               Open cart
             </Button>
@@ -195,7 +193,7 @@ export default function ProductAction({ product }: { product: Product }) {
             </p>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

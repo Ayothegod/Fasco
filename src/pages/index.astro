@@ -13,12 +13,12 @@ import slider from "@/assets/images/slider.png";
 import Layout from "@/shared/layouts/Layout.astro";
 
 import Deals from "@/modules/index/components/Deals.astro";
-import FollowUs from "@/modules/index/components/FollowUs.astro";
 import NewArrivals from "@/modules/index/components/NewArrivals";
-import Newsletter from "@/modules/index/components/Newsletter.astro";
+import Newsletter from "@/modules/index/components/Newsletter";
 import Testimonial from "@/modules/index/components/Testimonial.astro";
 import { Button } from "@/shared/components/ui/button";
 import { Image } from "astro:assets";
+import FollowUs from "@/modules/index/components/FollowUs";
 ---
 
 <Layout
@@ -142,12 +142,12 @@ import { Image } from "astro:assets";
     </section>
 
     <!-- NOTE: Follow us  -->
-    <FollowUs/>
+    <FollowUs />
 
     <!-- NOTE: testimonial -->
-     <Testimonial/>
+    <Testimonial />
 
     <!-- NOTE: newsletter -->
-     <Newsletter/>
+    <Newsletter />
   </div>
 </Layout>

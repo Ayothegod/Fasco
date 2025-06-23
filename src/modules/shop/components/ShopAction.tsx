@@ -37,8 +37,8 @@ import {
   PaginationPrevious,
 } from "@/shared/components/ui/pagination";
 import { getPaginationRange } from "../services/paginationRange";
-import FollowUs from "@/modules/index/components/FollowUs.astro";
-import Newsletter from "@/modules/index/components/Newsletter.astro";
+import Newsletter from "@/modules/index/components/Newsletter";
+import FollowUs from "../../index/components/FollowUs";
 
 export default function ShopAction() {
   useEffect(() => {

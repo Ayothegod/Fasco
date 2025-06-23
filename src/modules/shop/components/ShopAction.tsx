@@ -42,6 +42,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/shared/components/ui/pagination";
+import { getPaginationRange } from "../services/paginationRange";
 
 export default function ShopAction() {
   useEffect(() => {
@@ -383,21 +384,28 @@ export default function ShopAction() {
                 />
               </PaginationItem>
 
-              {Array.from({ length: totalPages }, (_, i) => {
-                const targetPage = i + 1;
-                const isCurrent = targetPage === Number(page);
+              {getPaginationRange(Number(page), totalPages).map((item, i) => {
+                if (item === "...") {
+                  return (
+                    <PaginationItem key={`dots-${i}`}>
+                      <span className="px-2 text-gray-400">...</span>
+                    </PaginationItem>
+                  );
+                }
+
+                const isCurrent = item === Number(page);
 
                 return (
-                  <PaginationItem key={targetPage}>
+                  <PaginationItem key={item}>
                     <PaginationLink
                       isActive={isCurrent}
-                      href={isCurrent ? undefined : getHref(targetPage)}
+                      href={isCurrent ? undefined : getHref(item)}
                       aria-current={isCurrent ? "page" : undefined}
                       className={
                         isCurrent ? "pointer-events-none opacity-50" : ""
                       }
                     >
-                      {targetPage}
+                      {item}
                     </PaginationLink>
                   </PaginationItem>
                 );

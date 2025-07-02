@@ -8,3 +8,13 @@ export function getStockMessage(stock: number): string | null {
   // }
   // return null;
 }
+
+
+const deliveryDate = new Date();
+deliveryDate.setDate(deliveryDate.getDate() + 7);
+
+export const formatted = deliveryDate.toLocaleDateString("en-US", {
+  weekday: "long",
+  month: "short",
+  day: "numeric",
+});

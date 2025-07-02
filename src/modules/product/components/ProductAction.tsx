@@ -17,7 +17,7 @@ import { Skeleton } from "@/shared/components/ui/skeleton";
 // import { cartStore, stateStore } from "~/lib/store";
 import type { Product } from "@/modules/shop/services/type";
 import { Progress } from "@/shared/components/ui/progress";
-import { getStockMessage } from "../services/productUtil";
+import { formatted, getStockMessage } from "../services/productUtil";
 import { query } from "@/modules/shop/services/useSearchParams";
 
 // const fetcher = (url: any) => fetch(url).then((res) => res.json());
@@ -70,7 +70,7 @@ export default function ProductAction({ product }: { product: Product }) {
   // };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 mt-24">
+    <div className="flex flex-col md:flex-row gap-4 mt-24 pageStyle  mb-28">
       <div className="border w-full md:w-1/2 flex gap-2 h-[460px] md:h-[640px]">
         <img
           src={product.imageUrl}
@@ -174,10 +174,11 @@ export default function ProductAction({ product }: { product: Product }) {
         <div>
           {!isAddedToCart ? (
             <Button
-              size={"lg"}
+              size={"icon"}
               className="flex items-center cursor-pointer justify-center w-full gap-8 py-6"
             >
-              <ShoppingBag /> <p className="text-lg">Add to cart</p>
+              <ShoppingBag className="" />
+               <p className="text-lg">Add to cart</p>
             </Button>
           ) : (
             <Button className=" w-full">Open cart</Button>
@@ -185,29 +186,31 @@ export default function ProductAction({ product }: { product: Product }) {
         </div>
 
         <div className="mt-10 space-y-2">
-          <div className="flex gap-4">
-            <div className="text-xs flex items-center gap-2 cursor-pointer border border-white hover:border-neutral-200 w-max rounded-md p-1">
-              <ShieldQuestion className="h-8 w-8" />
+          <div className="flex gap-4 opacity-50">
+            <div className="text-xs flex items-center gap-2 cursor-pointer border border-neutral-200 hover:bg-neutral-100 w-max rounded-md p-2">
+              <ShieldQuestion className="h-6 w-6" />
               <p>Ask a question</p>
             </div>
-            <div className="text-xs flex items-center gap-2 cursor-pointer border border-white hover:border-neutral-200 w-max rounded-md p-1">
-              <Share className="h-4 w-4" />
+
+            <div className="text-xs flex items-center gap-2 cursor-pointer border border-neutral-200 hover:bg-neutral-100 w-max rounded-md p-2">
+              <Share className="h-6 w-6" />
               <p>Share</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Car className="" />
-            <p className="font-medium text-sm">
-              Estimated delivery time: <span className="font-normal">TIME</span>
+          <div className="flex items-center gap-2 mt-6">
+            <Car className="h-7 w-7" />
+            <p className="font-semibold text-lg">
+              Estimated delivery time:{" "}
+              <span className="font-normal text-base">{formatted}</span>
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <ReceiptText className="" />
-            <p className="font-medium text-sm">
+            <ReceiptText className="h-7 w-7" />
+            <p className="font-semibold text-lg">
               Free shipping and returns:{" "}
-              <span className="font-normal">On all orders over $70</span>
+              <span className="font-normal text-base">On all orders over $70</span>
             </p>
           </div>
         </div>

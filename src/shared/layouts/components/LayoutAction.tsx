@@ -19,7 +19,7 @@ export default function LayoutAction({ user }: any) {
 
   return (
     <>
-      {user && (
+      {/* {user && ( */}
         <div className="flex items-center gap-2 sm:gap-4">
           <div className=" p-2">
             <Search className="cursor-pointer" />
@@ -31,7 +31,6 @@ export default function LayoutAction({ user }: any) {
             <Star className="cursor-pointer" />
           </div>
 
-          {/* <Sheet open={openCartSidebar} onOpenChange={setOpenCartSidebar}> */}
           <Sheet>
             <SheetTrigger asChild>
               <div className="relative mr-2">
@@ -146,7 +145,7 @@ export default function LayoutAction({ user }: any) {
             </SheetContent>
           </Sheet>
         </div>
-      )}
+      {/* // )} */}
     </>
   );
 }

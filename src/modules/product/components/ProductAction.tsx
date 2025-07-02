@@ -55,10 +55,10 @@ export default function ProductAction({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState<number>(Number(quan));
 
   const clickToast = () => {
-    toast.default({
-      text: "✨ @pheralb/toast",
-      description: "✨ A beautiful toast library for React",
-      variant: "error",
+    toast.loading({
+      text: "✨ Loading",
+      description: "Please wait!",
+      theme:"light"
     });
   };
 

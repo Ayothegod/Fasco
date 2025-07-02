@@ -1,4 +1,5 @@
 // import type { User } from "@prisma/client";
+import { cart, addToCart } from "@/modules/cart/services/cart";
 import { Button } from "@/shared/components/ui/button";
 import { Label } from "@/shared/components/ui/label";
 import {
@@ -12,10 +13,10 @@ import {
   SheetTrigger,
 } from "@/shared/components/ui/sheet";
 import { Search, ShoppingBag, Star, User } from "lucide-react";
+import { useStore } from "@nanostores/react";
 
 export default function LayoutAction({ user }: any) {
-  // console.log(user);
-  const cart: any[] = [];
+  const $cart = useStore(cart);
 
   const search = () => {
     // NOTE: either redirect to search page or create a modal for search
@@ -42,7 +43,7 @@ export default function LayoutAction({ user }: any) {
             <div className="relative mr-2">
               <ShoppingBag className="cursor-pointer" />
               <div className="absolute -top-2 -right-2 rounded-full h-5 w-5 bg-red-600 flex items-center justify-center">
-                <span className="text-xs text-white">{cart.length}</span>
+                <span className="text-xs text-white">{$cart.length}</span>
               </div>
             </div>
           </SheetTrigger>
@@ -59,7 +60,7 @@ export default function LayoutAction({ user }: any) {
             </SheetHeader>
 
             <div className="grid gap-4 py-4 overflow-y-auto">
-              {cart.length < 1 ? (
+              {/* {cart.length < 1 ? (
                 <div className="flex items-center justify-center mt-10">
                   <Label className="text-center">No items in your cart</Label>
                 </div>
@@ -104,13 +105,13 @@ export default function LayoutAction({ user }: any) {
                       </div>
                     </div>
                   ))}
-                  {/* <Button variant="link" onClick={clearCart}>
-                      Clear cart
-                    </Button> */}
                   Clear cart
                 </>
-              )}
+              )} */}
             </div>
+            {/* <Button variant="link" onClick={clearCart}>
+                  Clear cart
+                </Button> */}
 
             <SheetFooter className="mt-auto">
               <div className="flex flex-col w-full divide-y-2">

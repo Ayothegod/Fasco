@@ -19,6 +19,7 @@ import type { Product } from "@/modules/shop/services/type";
 import { Progress } from "@/shared/components/ui/progress";
 import { formatted, getStockMessage } from "../services/productUtil";
 import { query } from "@/modules/shop/services/useSearchParams";
+import { toast } from "@pheralb/toast";
 
 // const fetcher = (url: any) => fetch(url).then((res) => res.json());
 //   const { data, error, isLoading } = useSWR(
@@ -53,6 +54,14 @@ export default function ProductAction({ product }: { product: Product }) {
   const quan = query.get("quantity") ?? "";
   const [quantity, setQuantity] = useState<number>(Number(quan));
 
+  const clickToast = () => {
+    toast.default({
+      text: "✨ @pheralb/toast",
+      description: "✨ A beautiful toast library for React",
+      variant: "error",
+    });
+  };
+
   // const quantity: any = getItemQuantity(data?.id);
   // const addToCart = () => {
   //   const newItem = {
@@ -70,7 +79,7 @@ export default function ProductAction({ product }: { product: Product }) {
   // };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 mt-24 pageStyle  mb-28">
+    <div className="flex flex-col md:flex-row gap-4 pageStyle  mb-28">
       <div className="border w-full md:w-1/2 flex gap-2 h-[460px] md:h-[640px]">
         <img
           src={product.imageUrl}
@@ -176,9 +185,10 @@ export default function ProductAction({ product }: { product: Product }) {
             <Button
               size={"icon"}
               className="flex items-center cursor-pointer justify-center w-full gap-8 py-6"
+              onClick={clickToast}
             >
               <ShoppingBag className="" />
-               <p className="text-lg">Add to cart</p>
+              <p className="text-lg">Add to cart</p>
             </Button>
           ) : (
             <Button className=" w-full">Open cart</Button>
@@ -210,7 +220,9 @@ export default function ProductAction({ product }: { product: Product }) {
             <ReceiptText className="h-7 w-7" />
             <p className="font-semibold text-lg">
               Free shipping and returns:{" "}
-              <span className="font-normal text-base">On all orders over $70</span>
+              <span className="font-normal text-base">
+                On all orders over $70
+              </span>
             </p>
           </div>
         </div>

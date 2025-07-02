@@ -16,7 +16,7 @@ import { getProductBySlug } from "@/pages/api/v1/products/[id]";
 import ProductAction from "@/modules/product/components/ProductAction";
 
 const product = await getProductBySlug(productId as string);
-console.log(product, productId);
+// console.log(product, productId);
 ---
 
 <Layout
@@ -24,7 +24,7 @@ console.log(product, productId);
   description="Browse all fashion items including men's and women's clothing, shoes, belts, and more. Curated styles for every look — only at Fasco."
 >
   <div>
-    <section class="pageStyle">
+    <section class="pageStyle mb-24">
       <h2
         class="text-2xl sm:text-3xl md:text-2xl font-serif font-bold tracking-wide text-center"
       >
